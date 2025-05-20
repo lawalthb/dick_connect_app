@@ -87,8 +87,6 @@ Button.propTypes = {
   isLoading: PropTypes.bool,
   color: PropTypes.oneOf(['', 'primary', 'secondary', 'danger']),
   disabled: PropTypes.bool,
-  leftIconComponent: PropTypes.element,
-  rightIconComponent: PropTypes.element,
   className: PropTypes.string,
   labelClass: PropTypes.string,
   loadingText: PropTypes.string,
