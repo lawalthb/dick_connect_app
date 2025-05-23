@@ -10,12 +10,12 @@ const links = [
 
 const NavLinks = () => {
   return (
-    <nav className="flex flex-col lg:flex-row gap-6 items-center">
+    <nav className="flex flex-col lg:flex-row gap-6 items-start">
       {links.map(({ href, label }) => (
         <Link
           key={href}
           href={href}
-          className={`text-sm font-medium text-gray-600 hover:text-gray-400 transition-colors`}
+          className={`text-sm font-medium text-white hover:text-gray-300  lg:text-gray-600 lg:hover:text-gray-400 transition-colors`}
         >
           {label}
         </Link>

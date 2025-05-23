@@ -42,22 +42,24 @@ const NavBar = () => {
       <motion.div
         initial={{ height: 0, opacity: 0 }}
         animate={{ height: isOpen ? 'auto' : 0, opacity: isOpen ? 1 : 0 }}
-        className="lg:hidden overflow-hidden bg-[#A20030] pb-5"
+        className="lg:hidden overflow-hidden bg-[#A20030] pb-5 border border-b-white"
       >
         <ul className="flex flex-col space-y-4 px-6 py-4 text-lg">
           <NavLinks />
         </ul>
-        <div className="flex flex-col justify-center lg:hidden items-center gap-4">
+        <div className="flex flex-col justify-start lg:hidden items-center gap-4 px-20">
           <Button
             label="Sign In"
             variant="outlined"
             color="secondary"
             onClick={() => {}}
+            className="w-full"
           />
           <Button
             label="Create an account"
             color="secondary"
             onClick={() => {}}
+            className="w-full"
           />
         </div>
       </motion.div>

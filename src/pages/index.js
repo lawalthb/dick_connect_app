@@ -1,3 +1,10 @@
+import ConnectingPeople from '@/components/HomePage/ConnectingPeople';
+import DownLoadApp from '@/components/HomePage/DownLoadApp';
+import Features from '@/components/HomePage/Features';
+import Footer from '@/components/HomePage/Footer';
+import GetConnected from '@/components/HomePage/GetConnected';
+import HowConnectAppWorks from '@/components/HomePage/HowConnectAppWorks';
+import SocialVibeMatch from '@/components/HomePage/SocialVibeMatch';
 import NavBar from '@/components/Layout/NavBar';
 import Image from 'next/image';
 // import { Geist, Geist_Mono } from 'next/font/google';
@@ -15,11 +22,22 @@ import Image from 'next/image';
 export default function Home() {
   return (
     <div>
-      <header>
+      <header className="shadow-sm">
         <NavBar />
       </header>
-      <main></main>
-      <footer></footer>
+      <main>
+        <SocialVibeMatch />
+        <section className="h-full py-32 px-24">
+          <ConnectingPeople />
+          <GetConnected />
+          <HowConnectAppWorks />
+          <Features />
+        </section>
+        <DownLoadApp />
+      </main>
+      <footer className="bg-black h-[600px]">
+        <Footer />
+      </footer>
     </div>
   );
 }

@@ -11,7 +11,7 @@ const variants = {
     primary:
       'border border-[#A20030] text-[#A20030] hover:bg-rose-700 hover:text-white',
     secondary:
-      'border border-[#A20030] text-[#A20030] bg-white hover:bg-rose-700 hover:text-white',
+      'border border-[#A20030] text-[#A20030] bg-white hover:bg-gray-300',
   },
 };
 
