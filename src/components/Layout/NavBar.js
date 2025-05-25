@@ -1,11 +1,11 @@
 import ConnectAppLogo from '@/Images/Connect-app-logo.png';
 import Image from 'next/image';
 import NavLinks from './NavLinks';
-import Button from '../Button';
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { useState } from 'react';
 import { IoCloseSharp } from 'react-icons/io5';
 import { motion } from 'framer-motion';
+import LoginSignUpButtons from '../LoginSignUpButtons';
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,15 +18,12 @@ const NavBar = () => {
             alt="Connect App Logo"
             className="h-[60px] w-[87px]"
           />
-          {
-            <div className="hidden lg:block">
-              <NavLinks />
-            </div>
-          }
+          <div className="hidden lg:block">
+            <NavLinks />
+          </div>
         </div>
         <div className="hidden lg:flex items-center gap-4">
-          <Button label="Sign In" variant="outlined" onClick={() => {}} />
-          <Button label="Create an account" onClick={() => {}} />
+          <LoginSignUpButtons />
         </div>
         <div
           className="lg:hidden cursor-pointer"
@@ -48,19 +45,7 @@ const NavBar = () => {
           <NavLinks />
         </ul>
         <div className="flex flex-col justify-start lg:hidden items-center gap-4 px-20">
-          <Button
-            label="Sign In"
-            variant="outlined"
-            color="secondary"
-            onClick={() => {}}
-            className="w-full"
-          />
-          <Button
-            label="Create an account"
-            color="secondary"
-            onClick={() => {}}
-            className="w-full"
-          />
+          <LoginSignUpButtons color="secondary" extraClassName="w-full" />
         </div>
       </motion.div>
     </>

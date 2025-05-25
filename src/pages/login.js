@@ -1,3 +1,4 @@
+import UserLogin from '@/components/userLogin';
 import Image from 'next/image';
 // import { Geist, Geist_Mono } from 'next/font/google';
 
@@ -11,11 +12,15 @@ import Image from 'next/image';
 //   subsets: ['latin'],
 // });
 
-export default function Home() {
+const Login = () => {
   return (
     <div>
-      <main>ok</main>
+      <main>
+        <UserLogin />
+      </main>
       <footer></footer>
     </div>
   );
-}
+};
+
+export default Login;

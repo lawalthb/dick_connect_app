@@ -23,7 +23,7 @@ const sizes = {
 
 const btnStyles = {
   rounded: 'rounded-full',
-  normal: 'rounded-xl',
+  normal: 'rounded-lg',
 };
 
 const loaderColor = {
