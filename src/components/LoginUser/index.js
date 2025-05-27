@@ -4,15 +4,19 @@ import { useForm, FormProvider } from 'react-hook-form';
 import AuthHeader from './AuthHeader';
 import { useCallback, useState } from 'react';
 import ConnectAppIcon from '@/Images/Icons/ConnectAppIcon.svg';
+import { useRouter } from 'next/router';
 
 const LoginUser = () => {
+  const router = useRouter();
   const [isAuthType, setIsAuthType] = useState({
     login: true,
     password: false,
   });
   const methods = useForm();
 
-  const onSubmit = (data) => {};
+  const onSubmit = (data) => {
+    console.log(data);
+  };
 
   const handlePassword = useCallback((identifier) => {
     switch (identifier) {
@@ -32,12 +36,16 @@ const LoginUser = () => {
         console.warn('Unknown identifier:', identifier);
     }
   }, []);
+
+  const handleCreateAccount = useCallback(() => {
+    router.push('/signup');
+  }, [router]);
   return (
     <>
       <div className="flex justify-center">
         <ConnectAppIcon aria-label="Connect App Logo" />
       </div>
-      <div className="flex flex-col mx-auto w-[420px] mt-20">
+      <div className="flex flex-col mx-auto w-[420px] my-20">
         <AuthHeader
           label={isAuthType.password ? 'Forgot Password' : 'Login'}
           description={
@@ -76,7 +84,10 @@ const LoginUser = () => {
                   <span className="text-base text-[#5C5C5C] font-normal leading-6">
                     Don’t have an account?
                   </span>
-                  <span className="text-[#A20030] font-semibold text-base leading-6 cursor-pointer">
+                  <span
+                    onClick={handleCreateAccount}
+                    className="text-[#A20030] font-semibold text-base leading-6 cursor-pointer"
+                  >
                     Create Account
                   </span>
                 </div>

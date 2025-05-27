@@ -7,16 +7,7 @@ const LoginSignUpButtons = ({ extraClassName = '', color = 'primary' }) => {
 
   const handleButtonClick = useCallback(
     (identifier) => {
-      switch (identifier) {
-        case 'signIn':
-          router.push('/login');
-          break;
-        case 'signUp':
-          router.push('/signUp');
-          break;
-        default:
-          console.warn('Unknown identifier:', identifier);
-      }
+      router.push(`/${identifier}`);
     },
     [router],
   );
@@ -26,14 +17,14 @@ const LoginSignUpButtons = ({ extraClassName = '', color = 'primary' }) => {
         label="Sign In"
         variant="outlined"
         color={color}
-        onClick={() => handleButtonClick('signIn')}
+        onClick={() => handleButtonClick('login')}
         className={extraClassName}
       />
       <Button
         label="Create an account"
         color={color}
         className={extraClassName}
-        onClick={() => handleButtonClick('signUp')}
+        onClick={() => handleButtonClick('signup')}
       />
     </>
   );

@@ -12,14 +12,14 @@ import Image from 'next/image';
 //   subsets: ['latin'],
 // });
 
-const Login = () => {
+const SignUp = () => {
   return (
     <div>
       <main>
-        <UserAuth />
+        <UserAuth authType="Sign Up" />
       </main>
     </div>
   );
 };
 
-export default Login;
+export default SignUp;
