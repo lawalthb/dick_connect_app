@@ -15,6 +15,7 @@ const LoginUser = () => {
   const methods = useForm();
 
   const onSubmit = (data) => {
+    router.push('/2fa');
     console.log(data);
   };
 
