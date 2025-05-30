@@ -3,6 +3,7 @@ import UserAccessTabs from './Layout/UserAccessTabs';
 
 import LoginUser from './LoginUser';
 import SignUpUser from './SignUpUser';
+import SocialAuth from './LoginUser/SocialAuth';
 
 const UserAuth = ({ authType = 'Login' }) => {
   const [activeTab, setActiveTab] = useState(authType);
@@ -17,8 +18,11 @@ const UserAuth = ({ authType = 'Login' }) => {
         onTabChange={onTabChange}
         activeTab={activeTab}
       />
-      {activeTab === 'Login' && <LoginUser />}
-      {activeTab === 'Sign Up' && <SignUpUser />}
+      <div className="mx-auto w-[420px]">
+        {activeTab === 'Login' && <LoginUser />}
+        {activeTab === 'Sign Up' && <SignUpUser />}
+        {activeTab === 'socialAccount' && <SocialAuth />}
+      </div>
     </div>
   );
 };

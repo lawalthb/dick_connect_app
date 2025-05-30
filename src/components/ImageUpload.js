@@ -1,0 +1,96 @@
+import React, { useRef, useState } from 'react';
+import { useFormContext, Controller } from 'react-hook-form';
+import AddImageIcon from '@/Images/Icons/AddImageIcon.svg';
+
+const ImageUpload = () => {
+  const { control } = useFormContext();
+  const [preview, setPreview] = useState(null);
+  const [error, setError] = useState(null);
+  const fileInputRef = useRef(null);
+
+  const handleImageChange = (e, onChange) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const objectUrl = URL.createObjectURL(file);
+    const img = new Image();
+    img.src = objectUrl;
+
+    img.onload = () => {
+      if (img.width < 280 || img.height < 280) {
+        setError('Image must be at least 280x280 pixels');
+        setPreview(null);
+        return;
+      }
+
+      setError(null);
+      setPreview(objectUrl);
+      onChange(file);
+    };
+  };
+
+  const handleUploadClick = () => {
+    fileInputRef.current.click();
+  };
+
+  return (
+    <div className="w-full max-w-md mx-auto space-y-4">
+      <Controller
+        name="identityImage"
+        control={control}
+        render={({ field: { onChange } }) => (
+          <div className="flex justify-between items-center p-5 rounded-[10px] border border-[#D0D5DD]">
+            {/* Preview */}
+
+            <div className="w-20 h-20 rounded-full overflow-hidden border border-gray-200 shadow-md">
+              {preview ? (
+                <img
+                  src={preview}
+                  alt="Preview"
+                  className="w-full h-full object-cover rounded-full"
+                />
+              ) : (
+                <div className="flex items-center justify-center bg-[rgba(162,0,48,0.29)] w-full h-full rounded-full">
+                  <AddImageIcon />
+                </div>
+              )}
+            </div>
+
+            {/* Hidden file input */}
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              onChange={(e) => handleImageChange(e, onChange)}
+              className="hidden"
+            />
+
+            {/* Text + Upload button column */}
+            <div className="flex flex-col gap-y-3 w-[160px]">
+              <label className="text-base font-normal text-black">
+                Upload a picture
+              </label>
+              <p className="text-normal leading-6 text-[#8F8F8F] ">
+                Upload a clear picture of yourself for identity verification.
+                Image should be at least 280x280 px
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onClick={handleUploadClick}
+              className="text-[#A20030] h-14 bg-white px-6 py-2 rounded-lg shadow-md hover:bg-[#880026] hover:text-white border border-[#A20030] cursor-pointer transition duration-300"
+            >
+              Upload
+            </button>
+
+            {/* Error message */}
+            {error && <p className="text-sm text-red-600">{error}</p>}
+          </div>
+        )}
+      />
+    </div>
+  );
+};
+
+export default ImageUpload;

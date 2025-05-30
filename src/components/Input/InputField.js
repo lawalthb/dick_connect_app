@@ -81,7 +81,7 @@ const InputField = ({
     lg: 'text-xl rounded-xl ',
   };
   const baseClasses =
-    'py-2.5 pl-3 w-full text-gray-500 bg-[rgba(162,0,48,0.29)] placeholder-gray-400 focus:outline-none focus:border-[#A20030] focus:border-2 transition duration-300 ease-in-out ';
+    'py-2.5 pl-3 w-full h-14 text-gray-500 bg-[rgba(162,0,48,0.29)] placeholder-gray-400 focus:outline-none focus:border-[#A20030] focus:border-2 transition duration-300 ease-in-out ';
   const errorClass = errors?.[name]?.message
     ? 'border-red-600 border'
     : 'border dark:border-white border-gray-300';

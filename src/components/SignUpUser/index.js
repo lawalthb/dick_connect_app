@@ -6,6 +6,8 @@ import ConnectAppIcon from '@/Images/Icons/ConnectAppIcon.svg';
 import { useRouter } from 'next/router';
 import AuthHeader from '../LoginUser/AuthHeader';
 import SelectField from '../Input/SelectField';
+import ImageUpload from '../ImageUpload';
+import AuthFooter from './AuthFooter';
 
 const SignUpUser = () => {
   const router = useRouter();
@@ -25,12 +27,6 @@ const SignUpUser = () => {
         setIsAuthType({
           firstStep: false,
           secondStep: true,
-        });
-        break;
-      case 'back':
-        setIsAuthType({
-          firstStep: true,
-          secondStep: false,
         });
         break;
       default:
@@ -90,28 +86,10 @@ const SignUpUser = () => {
                 <Button
                   label="Next"
                   type="button"
-                  btnclass="w-full"
+                  btnclass="w-full h-14"
                   onClick={() => handleSignUpSTeps('next')}
                 />
-                <div className="flex items-center justify-center gap-2 mt-5">
-                  <span className="text-base text-[#5C5C5C] font-normal leading-6">
-                    Already have an account?
-                  </span>
-                  <span
-                    onClick={handleLogIn}
-                    className="text-[#A20030] font-semibold text-base leading-6 cursor-pointer"
-                  >
-                    Log In
-                  </span>
-                </div>
-                <p className="w-[75%] text-sm text-[#6D7A98] font-normal mx-auto text-center mt-5">
-                  By creating an account, you have agreed to our{' '}
-                  <span className="text-[#A20030] cursor-pointer">Terms</span>{' '}
-                  and{' '}
-                  <span className="text-[#A20030] cursor-pointer">
-                    conditions
-                  </span>
-                </p>
+                <AuthFooter handleLogIn={handleLogIn} />
               </form>
             </>
           )}
@@ -134,19 +112,13 @@ const SignUpUser = () => {
                     </option>
                   ))}
                 </SelectField>
+                <ImageUpload />
                 <Button
                   label="Create Account"
                   type="submit"
-                  btnclass="w-full"
+                  btnclass="w-full mt-10 h-14"
                 />
-                <div className="flex items-center justify-center gap-2 mt-5">
-                  <p
-                    onClick={() => handleSignUpSTeps('back')}
-                    className="text-base font-semibold leading-6 underline text-[#A20030] cursor-pointer w-max mt-5"
-                  >
-                    Back
-                  </p>
-                </div>
+                <AuthFooter handleLogIn={handleLogIn} />
               </form>
             </>
           )}
