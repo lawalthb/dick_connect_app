@@ -39,7 +39,7 @@ const AuthenticatedNavBar = () => {
             <div
               key={index}
               onClick={() => handleNavClick(nav.path)}
-              className={`flex items-center gap-3 ${
+              className={`flex items-center gap-3 hover:bg-[rgba(162,0,48,0.29)] hover:text-[#A20030] ${
                 isActive
                   ? 'bg-[rgba(162,0,48,0.29)] text-[#A20030]'
                   : 'text-[#444750]'
