@@ -23,7 +23,6 @@ const ConnectWithOthers = () => {
   ];
 
   const handleButtonClick = (type) => {
-    // Replace this with your actual logic (e.g., navigate, open modal, etc.)
     console.log(`Explore clicked for: ${type}`);
   };
 
