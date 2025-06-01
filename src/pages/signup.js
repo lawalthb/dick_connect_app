@@ -16,7 +16,10 @@ const SignUp = () => {
   return (
     <div>
       <main>
-        <UserAuth authType="Sign Up" />
+        <UserAuth
+          firstTabName="Sign Up with your email"
+          secondTabName="Sign Up with your social account"
+        />
       </main>
     </div>
   );

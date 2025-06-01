@@ -1,5 +1,4 @@
 import { FormProvider, useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
 import PinField from 'react-pin-field';
 import AuthWrapper from './AuthWrapper';
 import Button from '../Button';
@@ -7,13 +6,16 @@ import TwoFactorCountdownTimer from '../TwoFactorCountdownTimer';
 
 const TwoFactorAuth = ({ heading, subHeading, email }) => {
   const methods = useForm();
-  const router = useRouter();
 
   const pinCode = methods.watch('pinCode');
 
   const onSubmit = (data) => {
     console.log(data);
-    router.push('/dashboard');
+    window.location.href = '/dashboard';
+  };
+
+  const handlePinChange = (value) => {
+    methods.setValue('pinCode', value);
   };
 
   return (
@@ -43,9 +45,7 @@ const TwoFactorAuth = ({ heading, subHeading, email }) => {
                 margin: '0 5px',
                 borderWidth: '1.5px',
               }}
-              onChange={(value) => {
-                methods.setValue('pinCode', value);
-              }}
+              onChange={handlePinChange}
             />
           </div>
           <Button

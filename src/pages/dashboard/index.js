@@ -1,6 +1,6 @@
 import AuthenticatedNavBar from '@/components/AuthenticatedNavBar';
 
-const Connecting = () => {
+const Dashboard = () => {
   return (
     <div>
       <AuthenticatedNavBar />
@@ -8,4 +8,4 @@ const Connecting = () => {
   );
 };
 
-export default Connecting;
+export default Dashboard;
