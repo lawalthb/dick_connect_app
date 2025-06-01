@@ -46,7 +46,7 @@ const AuthenticatedNavBar = () => {
               } px-5 py-3 rounded-lg cursor-pointer transition-colors duration-200`}
             >
               <IconComponent
-                className={`w-5 h-5 ${isActive ? 'stroke-[#A20030]' : 'stroke-[#444750]'}`}
+                className={`size-5 hover:stroke-[#A20030] ${isActive ? 'stroke-[#A20030]' : 'stroke-[#444750]'}`}
                 aria-label={`${nav.name} Icon`}
               />
               <h3 className="font-normal text-sm leading-5">{nav.name}</h3>

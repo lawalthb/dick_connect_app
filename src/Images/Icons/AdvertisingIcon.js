@@ -1,4 +1,4 @@
-const AdvertisingIcon = (props) => {
+const AdvertisingIcon = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -6,8 +6,7 @@ const AdvertisingIcon = (props) => {
       height="24"
       viewBox="0 0 24 24"
       fill="none"
-      stroke="#292D32"
-      {...props}
+      stroke="currentColor"
     >
       <path
         d="M22 13V9C22 4 20 2 15 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22H13"

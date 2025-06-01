@@ -1,4 +1,4 @@
-const ConnectingIcon = (props) => {
+const ConnectingIcon = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -6,8 +6,7 @@ const ConnectingIcon = (props) => {
       height="24"
       viewBox="0 0 24 24"
       fill="none"
-      stroke="#A20030"
-      {...props}
+      stroke="currentColor"
     >
       <path
         d="M9.16 10.87C9.06 10.86 8.94 10.86 8.83 10.87C6.45 10.79 4.56 8.84 4.56 6.44C4.56 3.99 6.54 2 9 2C11.45 2 13.44 3.99 13.44 6.44C13.43 8.84 11.54 10.79 9.16 10.87Z"
