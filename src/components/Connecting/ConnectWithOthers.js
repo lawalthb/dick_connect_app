@@ -10,47 +10,40 @@ const ConnectWithOthers = () => {
   const connectOptions = [
     {
       name: 'Just Connect!',
-      icon: <JustConnectIcon aria-label="Just Connet Icon" />,
+      icon: <JustConnectIcon aria-label="Just Connect Icon" />,
     },
-    {
-      name: 'Sport',
-      icon: <SportIcon aria-label="Sport Icon" />,
-    },
+    { name: 'Sport', icon: <SportIcon aria-label="Sport Icon" /> },
     {
       name: 'Health & Fitness',
       icon: <HealthAndFitness aria-label="Health & Fitness Icon" />,
     },
-    {
-      name: 'Business',
-      icon: <BusinessIcon aria-label="Business Icon" />,
-    },
-    {
-      name: 'Fashion',
-      icon: <FashionIcon aria-label="Fashion Icon" />,
-    },
-    {
-      name: 'Fashion',
-      icon: <GamingIcon aria-label="Gaming Icon" />,
-    },
+    { name: 'Business', icon: <BusinessIcon aria-label="Business Icon" /> },
+    { name: 'Fashion', icon: <FashionIcon aria-label="Fashion Icon" /> },
+    { name: 'Gaming', icon: <GamingIcon aria-label="Gaming Icon" /> },
   ];
+
+  const handleButtonClick = (type) => {
+    // Replace this with your actual logic (e.g., navigate, open modal, etc.)
+    console.log(`Explore clicked for: ${type}`);
+  };
+
   return (
-    <div>
+    <div className="px-4">
       <h3 className="font-bold text-[40px] text-[#A20030]">Category</h3>
-      <div className="grid grid-cols-1 lg:grid-cols-3 my-20">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 my-20 place-items-center">
         {connectOptions.map((options, index) => (
           <div
             key={index}
-            className="bg-white flex flex-col gap-7 justify-center items-center mb-10 w-[380px] h-[312px]"
+            className="bg-white w-full max-w-[380px] h-[312px] rounded-xl shadow-md hover:shadow-xl transition duration-300 ease-in-out transform hover:-translate-y-1 flex flex-col gap-6 justify-center items-center p-6"
           >
             {options.icon}
-            <h3 className="text-[#A20030] font-semibold text-[20px] leading-5">
+            <h3 className="text-[#A20030] font-semibold text-lg text-center">
               {options.name}
             </h3>
             <Button
               label="Explore"
               variant="outlined"
-              //   color={color}
-              onClick={() => handleButtonClick('login')}
+              onClick={() => handleButtonClick(options.name)}
               className="w-[204px] h-[45px]"
             />
           </div>
