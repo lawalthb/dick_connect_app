@@ -7,11 +7,13 @@ import TwoFactorCountdownTimer from '../TwoFactorCountdownTimer';
 
 const TwoFactorAuth = ({ heading, subHeading, email }) => {
   const methods = useForm();
+  const router = useRouter();
 
   const pinCode = methods.watch('pinCode');
 
   const onSubmit = (data) => {
     console.log(data);
+    router.push('/dashboard');
   };
 
   return (
