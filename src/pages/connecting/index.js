@@ -14,7 +14,7 @@ const Connecting = () => {
   return (
     <div>
       <AuthenticatedNavBar />
-      <div className="px-28">
+      <div className="px-5 md:px-28">
         <TabSelector
           firstTabName={'Connect with others'}
           secondTabName={'Connecting Feed'}
@@ -22,7 +22,7 @@ const Connecting = () => {
           activeTab={activeTab}
         />
       </div>
-      <div className="px-20">
+      <div className="px-5 md:px-20">
         {activeTab === 'Connect with others' && <ConnectWithOthers />}
         {activeTab === 'Connecting Feed' && <ConnectionFeed />}
       </div>

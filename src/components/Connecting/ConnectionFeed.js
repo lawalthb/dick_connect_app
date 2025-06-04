@@ -12,7 +12,7 @@ const ConnectionFeed = () => {
     console.log(data);
   };
   return (
-    <div className="px-20 w-full mb-20">
+    <div className="md:px-20 w-full mb-20">
       <h3 className="font-medium text-[24px] leading-6 text-[#5C5C5C]">
         Tagged Connections
       </h3>

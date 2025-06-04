@@ -81,7 +81,7 @@ const ImageUpload = () => {
                 )}
               </div>
               {/* Text + Upload button column */}
-              <div className="flex flex-col gap-y-3 w-max">
+              <div className="flex flex-col gap-y-3 w-[120px] md:w-max">
                 <label className="text-base font-normal text-black">
                   Upload a picture or video
                 </label>
