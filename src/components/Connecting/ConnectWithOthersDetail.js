@@ -4,8 +4,11 @@ import Daniella from '@/Images/Daniella.png';
 import MessagesIcon from '@/Images/Icons/MessagesIcon.svg';
 import ConnectingXIcon from '@/Images/Icons/ConnectingXIcon.svg';
 import HeartIcon from '@/Images/Icons/HeartIcon.svg';
+import FilterModal from '../Modal/FilterModal';
+import { useState } from 'react';
 
 const ConnectWithOthersDetail = () => {
+  const [showFilter, setShowFilter] = useState(false);
   const iconOption = [
     { id: 'cancel', icon: ConnectingXIcon },
     { id: 'heart', icon: HeartIcon },
@@ -15,9 +18,15 @@ const ConnectWithOthersDetail = () => {
   const handleOptionClick = (identifier) => {
     console.log(identifier);
   };
+  const handleFilter = () => {
+    setShowFilter((prev) => !prev);
+  };
   return (
     <div className="w-[805px] flex flex-col items-center justify-center mx-auto pb-20">
-      <div className="flex justify-center items-center mr-10 w-[91px] h-10 ml-auto gap-2 bg-white border border-[#C7C7C7] rounded shadow-sm hover:bg-[#A20030] hover:shadow-md group transition duration-200 ease-in-out cursor-pointer">
+      <div
+        onClick={handleFilter}
+        className="flex justify-center items-center mr-10 w-[91px] h-10 ml-auto gap-2 bg-white border border-[#C7C7C7] rounded shadow-sm hover:bg-[#A20030] hover:shadow-md group transition duration-200 ease-in-out cursor-pointer"
+      >
         <h3 className="text-[#6D7A98] group-hover:text-white font-medium text-sm leading-4">
           Filter
         </h3>
@@ -58,6 +67,9 @@ const ConnectWithOthersDetail = () => {
           </div>
         </div>
       </div>
+      {showFilter && (
+        <FilterModal showFilter={showFilter} handleFilter={handleFilter} />
+      )}
     </div>
   );
 };

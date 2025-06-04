@@ -14,7 +14,7 @@ const TabSelector = ({
   );
 
   const activeColor = 'text-[#A20030] border-[#A20030]';
-  const inActiveColor = 'text-[#5C5C5C] border-[#5C5C5C]';
+  const inActiveColor = 'text-[#5C5C5C] border-[#E3E3E3]';
 
   const firstTabBorderColor =
     activeTab === firstTabName ? activeColor : inActiveColor;

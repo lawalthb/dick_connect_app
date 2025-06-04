@@ -1,4 +1,3 @@
-import ConnectAppLogo from '@/Images/Connect-app-logo.png';
 import Image from 'next/image';
 import NavLinks from './NavLinks';
 import { GiHamburgerMenu } from 'react-icons/gi';
@@ -6,6 +5,7 @@ import { useState } from 'react';
 import { IoCloseSharp } from 'react-icons/io5';
 import { motion } from 'framer-motion';
 import LoginSignUpButtons from '../LoginSignUpButtons';
+import ConnectAppIcon from '@/Images/Icons/Connect-app-logo.svg';
 
 const NavBar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,11 +13,7 @@ const NavBar = () => {
     <>
       <div className="flex items-center justify-between p-4 bg-white h-16 w-full">
         <div className="flex items-center gap-20">
-          <Image
-            src={ConnectAppLogo}
-            alt="Connect App Logo"
-            className="h-[60px] w-[87px]"
-          />
+          <ConnectAppIcon aria-label="Connect App Logo" />
           <div className="hidden lg:block">
             <NavLinks />
           </div>

@@ -1,4 +1,5 @@
 import AuthenticatedNavBar from '@/components/AuthenticatedNavBar';
+import ConnectionFeed from '@/components/Connecting/ConnectionFeed';
 import ConnectWithOthers from '@/components/Connecting/ConnectWithOthers';
 import TabSelector from '@/components/Layout/TabSelector';
 import { useState } from 'react';
@@ -23,6 +24,7 @@ const Connecting = () => {
       </div>
       <div className="px-20">
         {activeTab === 'Connect with others' && <ConnectWithOthers />}
+        {activeTab === 'Connecting Feed' && <ConnectionFeed />}
       </div>
     </div>
   );

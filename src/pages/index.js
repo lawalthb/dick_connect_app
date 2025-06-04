@@ -22,7 +22,7 @@ import Image from 'next/image';
 export default function Home() {
   return (
     <div>
-      <header className="shadow-sm">
+      <header className="shadow-sm my-5">
         <NavBar />
       </header>
       <main>
