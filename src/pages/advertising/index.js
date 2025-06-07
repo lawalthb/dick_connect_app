@@ -1,4 +1,4 @@
-import AuthenticatedNavBar from '@/components/AuthenticatedNavBar';
+import AuthenticatedNavBar from '@/components/Layout/AuthenticatedNavBar';
 
 const Advertising = () => {
   return (

@@ -1,4 +1,4 @@
-import AuthenticatedNavBar from '@/components/AuthenticatedNavBar';
+import AuthenticatedNavBar from '@/components/Layout/AuthenticatedNavBar';
 import ConnectionFeed from '@/components/Connecting/ConnectionFeed';
 import ConnectWithOthers from '@/components/Connecting/ConnectWithOthers';
 import TabSelector from '@/components/Layout/TabSelector';
