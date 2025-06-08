@@ -2,7 +2,7 @@ import LivestreamIcon from '@/Images/Icons/LivestreamIcon';
 
 const StreamCard = ({ option, handleViewMore }) => {
   return (
-    <div className="bg-[#E6BAC7] rounded-3xl w-[553px] p-10">
+    <div className="bg-[#E6BAC7] rounded-3xl w-[553px] p-10 transition-shadow duration-300 hover:shadow-xl hover:shadow-[#A20030]/30">
       <div className="flex items-center justify-center bg-[#A20030] size-20 rounded-full">
         <LivestreamIcon />
       </div>

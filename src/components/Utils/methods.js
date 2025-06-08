@@ -14,3 +14,11 @@ export const getFormFieldError = (errors, name) => {
 
   return current?.message;
 };
+
+// Utility to extract YouTube video ID
+export const getYouTubeVideoId = (url) => {
+  const regex =
+    /(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([^\s&?]+)/;
+  const match = url.match(regex);
+  return match ? match[1].split(/[&?]/)[0] : null;
+};
