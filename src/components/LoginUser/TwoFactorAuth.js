@@ -11,7 +11,7 @@ const TwoFactorAuth = ({ heading, subHeading, email }) => {
 
   const onSubmit = (data) => {
     console.log(data);
-    window.location.href = '/dashboard';
+    window.location.href = '/connecting';
   };
 
   const handlePinChange = (value) => {

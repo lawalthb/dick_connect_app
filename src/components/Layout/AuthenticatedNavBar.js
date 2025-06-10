@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import DashboardIcon from '@/Images/Icons/DashboardIcon';
+import PostIcon from '@/Images/Icons/PostIcon';
 import ConnectingIcon from '@/Images/Icons/ConnectingIcon';
 import ChatIcon from '@/Images/Icons/ChatIcon';
 import LivestreamIcon from '@/Images/Icons/LivestreamIcon';
@@ -17,8 +17,8 @@ const AuthenticatedNavBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const subNav = [
-    { name: 'Dashboard', path: '/dashboard', icon: DashboardIcon },
     { name: 'Connecting', path: '/connecting', icon: ConnectingIcon },
+    { name: 'Post', path: '/dashboard', icon: PostIcon },
     { name: 'Chat', path: '/chat', icon: ChatIcon },
     { name: 'Livestream', path: '/livestream', icon: LivestreamIcon },
     { name: 'Advertising', path: '/advertising', icon: AdvertisingIcon },
