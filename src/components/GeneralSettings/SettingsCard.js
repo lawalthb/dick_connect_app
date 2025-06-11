@@ -1,8 +1,11 @@
 import LockIcon from '@/Images/Icons/LockIcon.svg';
 
-const SettingsCard = ({ data }) => {
+const SettingsCard = ({ data, handleSettingsClick }) => {
   return (
-    <div className="w-full flex gap-5 bg-[#A2003033] p-5 rounded-lg transition-shadow duration-300 hover:shadow-xl hover:shadow-[#A20030]/30 cursor-pointer">
+    <div
+      onClick={() => handleSettingsClick(data.name)}
+      className="w-full flex gap-5 bg-[#A2003033] p-5 rounded-lg transition-shadow duration-300 hover:shadow-xl hover:shadow-[#A20030]/30 cursor-pointer"
+    >
       <div className="size-[42.83px] bg-[#A200303B] flex items-center justify-center rounded-full ">
         <LockIcon />
       </div>
