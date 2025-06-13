@@ -39,6 +39,10 @@ const Subscription = () => {
       icon: BoostIcon,
     },
   ];
+
+  const handleSubsribe = () => {
+    console.log('Subsribe');
+  };
   return (
     <div className="w-[90%] lg:w-[60%] py-20 px-10 rounded-lg mx-auto">
       {subscriptionData.map((data, index) => {
@@ -52,6 +56,7 @@ const Subscription = () => {
               description={data.description}
               icon={<IconComponent />}
               isPremium={isPremium}
+              handleSubsribe={handleSubsribe}
             />
           </div>
         );

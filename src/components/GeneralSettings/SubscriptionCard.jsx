@@ -6,6 +6,7 @@ const SubscriptionCard = ({
   description,
   icon: Icon,
   isPremium,
+  handleSubsribe,
 }) => {
   return (
     <>
@@ -44,7 +45,7 @@ const SubscriptionCard = ({
         label={'Subscribe'}
         btnclass="w-full h-14 max-w-[328px] ml-auto mt-7"
         btnstyle="rounded"
-        // onClick={handleConfirm}
+        onClick={handleSubsribe}
       />
     </>
   );
