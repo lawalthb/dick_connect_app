@@ -5,7 +5,7 @@ import TabSelector from '@/components/Layout/TabSelector';
 import { useState } from 'react';
 
 const Connecting = () => {
-  const [activeTab, setActiveTab] = useState('Connect with others');
+  const [activeTab, setActiveTab] = useState('Connecting Feed');
 
   const onTabChange = (newValue) => {
     setActiveTab(newValue);
@@ -16,8 +16,8 @@ const Connecting = () => {
       <AuthenticatedNavBar />
       <div className="px-5 md:px-28">
         <TabSelector
-          firstTabName={'Connect with others'}
-          secondTabName={'Connecting Feed'}
+          firstTabName={'Connecting Feed'}
+          secondTabName={'Connect with others'}
           onTabChange={onTabChange}
           activeTab={activeTab}
         />

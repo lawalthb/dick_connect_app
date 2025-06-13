@@ -18,7 +18,7 @@ const AuthenticatedNavBar = () => {
 
   const subNav = [
     { name: 'Connecting', path: '/connecting', icon: ConnectingIcon },
-    { name: 'Post', path: '/dashboard', icon: PostIcon },
+    { name: 'Post', path: '/post', icon: PostIcon },
     { name: 'Chat', path: '/chat', icon: ChatIcon },
     { name: 'Livestream', path: '/livestream', icon: LivestreamIcon },
     { name: 'Advertising', path: '/advertising', icon: AdvertisingIcon },

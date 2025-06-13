@@ -58,7 +58,7 @@ const MainSettings = ({ handleSettingsClick }) => {
             </div>
           ))}
         </div>
-        <Logout />
+        <Logout handleSettingsClick={handleSettingsClick} />
       </div>
     </>
   );

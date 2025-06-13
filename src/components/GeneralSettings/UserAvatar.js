@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import DefaultMaleAvatar from '@/Images/DefaultMaleAvatar.png';
 import CameraIcon from '@/Images/Icons/CameraIcon.svg';
 
-const UserAvatar = () => {
+const UserAvatar = ({ updateImage = true }) => {
   const fileInputRef = useRef(null);
   const [avatarSrc, setAvatarSrc] = useState(DefaultMaleAvatar.src);
 
@@ -28,12 +28,14 @@ const UserAvatar = () => {
         alt="User Avatar"
         className="object-fill size-[114.37px] text-black rounded-full"
       />
-      <div
-        className="size-[40.29px] bg-[#F5F5F5] rounded-full flex items-center justify-center absolute bottom-0 right-0 cursor-pointer"
-        onClick={handleIconClick}
-      >
-        <CameraIcon />
-      </div>
+      {updateImage && (
+        <div
+          className="size-[40.29px] bg-[#F5F5F5] rounded-full flex items-center justify-center absolute bottom-0 right-0 cursor-pointer"
+          onClick={handleIconClick}
+        >
+          <CameraIcon />
+        </div>
+      )}
       <input
         type="file"
         accept="image/*"
