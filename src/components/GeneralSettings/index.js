@@ -8,6 +8,7 @@ import ChangeCountry from './ChangeCountry';
 import AddExternalLinks from './AddExternalLinks';
 import ConfirmationModal from './ConfirmationModal';
 import LogoutIcon from '@/Images/Icons/LogoutIcon.svg';
+import Subscription from './Subscription';
 
 const GeneralSettings = () => {
   const [activeSettings, setActiveSettings] = useState({});
@@ -64,6 +65,7 @@ const GeneralSettings = () => {
       )}
       {activeSettings.notification && <Notifications />}
       {activeSettings.accountsetting && <ProfileSettings />}
+      {activeSettings.subscription && <Subscription />}
 
       <ChangePassword
         activeSettings={activeSettings}
