@@ -2,6 +2,7 @@ import Button from '../Button';
 import { IoChevronForwardSharp } from 'react-icons/io5';
 import LineChartComp from '../Charts/LineChartComp';
 import { FormProvider, useForm } from 'react-hook-form';
+import StackedBarChartComp from '../Charts/StackedBarChartComp';
 
 const Performance = ({ handleCreateAd }) => {
   const methods = useForm();
@@ -37,6 +38,16 @@ const Performance = ({ handleCreateAd }) => {
     { date: 'Jun', value: 90000 },
   ];
 
+  const stackedBarData = [
+    { label: 'Mon', value: 4000, rest: 6000 },
+    { label: 'Tue', value: 5000, rest: 5000 },
+    { label: 'Wed', value: 7000, rest: 3000 },
+    { label: 'Thu', value: 6000, rest: 4000 },
+    { label: 'Fri', value: 8000, rest: 2000 },
+    { label: 'Sat', value: 6500, rest: 3500 },
+    { label: 'Sun', value: 5500, rest: 4500 },
+  ];
+
   const onSubmit = (data) => {
     console.log(data);
   };
@@ -68,24 +79,30 @@ const Performance = ({ handleCreateAd }) => {
             </div>
           ))}
         </div>
-        <h3 className="font-semibold text-[24px] leading-6 text-[#2E2E2E] my-16">
-          Performance
-        </h3>
-        <FormProvider {...methods}>
-          <form
-            onSubmit={methods.handleSubmit(onSubmit)}
-            className="space-y-4 mt-10"
-          >
-            <div className="p-10">
-              <LineChartComp
-                data={lineChartData}
-                title="Impression overtime"
-                chartLabel="Impressions"
-              />
-            </div>
-          </form>
-        </FormProvider>
       </div>
+      <h3 className="font-semibold text-[24px] leading-6 text-[#2E2E2E] my-16">
+        Performance
+      </h3>
+      <FormProvider {...methods}>
+        <form
+          onSubmit={methods.handleSubmit(onSubmit)}
+          className="space-y-4 mt-10"
+        >
+          <div className="p-10">
+            <LineChartComp
+              data={lineChartData}
+              title="Impression overtime"
+              chartLabel="Impressions"
+            />
+          </div>
+          <div className="p-10 w-[70%]">
+            <StackedBarChartComp
+              data={stackedBarData}
+              title="Conversion by Campaign"
+            />
+          </div>
+        </form>
+      </FormProvider>
     </div>
   );
 };

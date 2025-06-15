@@ -32,6 +32,7 @@ const LineChartComp = ({
             required={false}
             bgStyle={false}
           >
+            <option value="">Yearly</option>
             {['2024', '2025'].map((year) => (
               <option key={year} value={year}>
                 {year}
