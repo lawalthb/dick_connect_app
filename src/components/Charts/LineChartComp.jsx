@@ -20,7 +20,7 @@ const LineChartComp = ({
   return (
     <div className="w-full bg-white rounded-2xl shadow-lg p-6">
       <div className="flex justify-between">
-        <div className="flex items-center justify-center gap-3 rounded-[10px] bg-[#A2003021] py-2 px-4 w-max">
+        <div className="flex items-center justify-center gap-3 rounded-[10px] bg-[#A2003021] py-2 px-4 w-max h-max">
           <GoDotFill fill="#A20030" />
           <h2 className="text-sm font-normal text-[#5C5C5C] mt-1">{title}</h2>
           <IoClose fill="#5C5C5C" />
