@@ -18,7 +18,7 @@ const StackedBarChartComp = ({
 }) => {
   return (
     <div className="w-full bg-white rounded-2xl shadow-lg p-6">
-      <div className="flex justify-between">
+      <div className="flex flex-col md:flex-row justify-between">
         <h2 className="text-sm leading-6 font-semibold text-[#101928] mb-4">
           {title}
         </h2>

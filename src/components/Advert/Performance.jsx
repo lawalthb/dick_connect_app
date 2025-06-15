@@ -53,10 +53,10 @@ const Performance = ({ handleCreateAd }) => {
   };
 
   return (
-    <div>
+    <div className="my-16">
       <Button
         label="Create Ad"
-        btnclass="w-full h-14 max-w-[204px] ml-auto mt-7"
+        btnclass="w-full h-14 max-w-[204px] ml-auto"
         onClick={handleCreateAd}
       />
 
@@ -88,14 +88,14 @@ const Performance = ({ handleCreateAd }) => {
           onSubmit={methods.handleSubmit(onSubmit)}
           className="space-y-4 mt-10"
         >
-          <div className="p-10">
+          <div className="lg:p-10">
             <LineChartComp
               data={lineChartData}
               title="Impression overtime"
               chartLabel="Impressions"
             />
           </div>
-          <div className="p-10 w-[70%]">
+          <div className="lg:p-10 w-full lg:w-[70%]">
             <StackedBarChartComp
               data={stackedBarData}
               title="Conversion by Campaign"
