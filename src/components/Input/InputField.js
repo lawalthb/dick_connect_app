@@ -143,7 +143,7 @@ const InputField = ({
             maxDate={otherProps.max}
             name={name}
             popperPlacement="top-start"
-            className={`${inputClasses} w-full !pl-7 min-h-[2.75rem]`}
+            className={`${inputClasses} !w-full !pl-7 min-h-[2.75rem]`}
             containerClass="w-full z-[11]"
             showIcon
             isClearable

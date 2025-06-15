@@ -53,7 +53,7 @@ const Performance = ({ handleCreateAd }) => {
   };
 
   return (
-    <div className="my-16">
+    <>
       <Button
         label="Create Ad"
         btnclass="w-full h-14 max-w-[204px] ml-auto"
@@ -103,7 +103,7 @@ const Performance = ({ handleCreateAd }) => {
           </div>
         </form>
       </FormProvider>
-    </div>
+    </>
   );
 };
 

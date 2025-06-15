@@ -88,7 +88,7 @@ const ProfileSettings = () => {
                   <InputField
                     label={'Date of Birth'}
                     type="date"
-                    name={'phone'}
+                    name={'date'}
                     required={false}
                   />
                 </div>
