@@ -4,7 +4,7 @@ import { getYouTubeVideoId } from './Utils/methods';
 
 const VideoPlayer = ({ src }) => {
   const [isPlaying, setIsPlaying] = useState(false);
-  const isYouTube = src.includes('youtube');
+  const isYouTube = src?.includes('youtube');
   const videoId = getYouTubeVideoId(src);
 
   const handlePlay = () => {

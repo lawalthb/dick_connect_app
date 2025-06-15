@@ -16,6 +16,7 @@ export default function SelectField({
   containerClass = 'mb-5',
   className = '',
   requiredMsg = 'This field is required',
+  bgStyle = true,
   ...props
 }) {
   const {
@@ -29,8 +30,7 @@ export default function SelectField({
     md: 'text-base rounded-[10px]',
     lg: 'text-xl rounded-xl ',
   };
-  const baseClasses =
-    'py-2.5 pl-3 w-full h-14 text-gray-500 bg-[rgba(162,0,48,0.29)] placeholder-gray-400 focus:outline-none focus:border-[#A20030] focus:border-2 transition duration-300 ease-in-out ';
+  const baseClasses = `py-2.5 pl-3 w-full h-14 text-gray-500 ${bgStyle ? 'bg-[rgba(162,0,48,0.29)]' : ''}  placeholder-gray-400 focus:outline-none focus:border-[#A20030] focus:border-2 transition duration-300 ease-in-out `;
   const errorClass = errors?.[name]?.message
     ? 'border-red-600 border'
     : 'border border-white dark:border-gray-950';
