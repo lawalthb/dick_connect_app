@@ -2,7 +2,7 @@ import React, { useRef, useState } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import AddImageIcon from '@/Images/Icons/AddImageIcon.svg';
 
-const ImageUpload = () => {
+const ImageUpload = ({ handlePreview }) => {
   const { control } = useFormContext();
   const [preview, setPreview] = useState(null);
   const [mediaType, setMediaType] = useState(null);
@@ -32,6 +32,7 @@ const ImageUpload = () => {
         setMediaType('image');
         setPreview(objectUrl);
         onChange(file);
+        handlePreview?.(objectUrl);
       };
     } else if (isVideo) {
       setError(null);

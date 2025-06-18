@@ -1,12 +1,18 @@
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import InputField from '../Input/InputField';
 import SelectField from '../Input/SelectField';
 import ImageUpload from '../ImageUpload';
 import Checkbox from '../Checkbox';
 import Button from '../Button';
+import { useEffect } from 'react';
 
 const CreateAdvert = ({ onSubmit, handlePreviewAd }) => {
   const methods = useForm();
+  const { control } = methods;
+
+  // Watch all fields
+  const allValues = useWatch({ control });
+
   return (
     <div className="w-[90%] lg:w-[70%] mx-auto mt-10">
       <div className="my-5">
@@ -88,7 +94,9 @@ const CreateAdvert = ({ onSubmit, handlePreviewAd }) => {
             </div>
           </div>
           <div className="my-10">
-            <ImageUpload />
+            <ImageUpload
+              handlePreview={(url) => methods.setValue('identityMedia', url)}
+            />
           </div>
           <InputField
             label={'Ad Copy'}
@@ -110,13 +118,13 @@ const CreateAdvert = ({ onSubmit, handlePreviewAd }) => {
             <Button
               label="Create Advert"
               type="submit"
-              btnclass="w-full h-14 ]"
+              btnclass="w-full h-14"
             />
             <Button
               label="Preview Ad"
               variant="outlined"
-              onClick={() => handlePreviewAd()}
-              btnclass="w-full h-14 "
+              onClick={() => handlePreviewAd?.(allValues)}
+              btnclass="w-full h-14"
             />
           </div>
         </form>
