@@ -10,7 +10,7 @@ const FormLabel = ({ label, id, name, size = 'md', required }) => {
   return (
     <label
       htmlFor={id || name}
-      className={`font-normal ${labelSize[size]} relative w-fit text-[#5C5C5C]`}
+      className={`font-normal w-max ${labelSize[size]} relative w-fit text-[#5C5C5C]`}
     >
       {label}
       {required && label && (

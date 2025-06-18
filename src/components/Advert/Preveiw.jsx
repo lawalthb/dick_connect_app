@@ -34,13 +34,13 @@ const Preview = ({ data, handleBackToPerformance, handleConfirmAd }) => {
   ];
   return (
     <div className="w-[90%] lg:w-[70%] mx-auto mt-10 space-y-10">
-      <div className=" border border-[#A20030] rounded-[30px] p-10">
+      <div className=" border border-[#A20030] rounded-[30px] p-3 lg:p-10">
         <img
           src={data.identityMedia || AdvertFallbackImage.src}
           alt="Preview Image"
           className="min-h-[407px] rounded-[10px] w-full object-cover"
         />
-        <div className="px-10 py-7 space-y-2">
+        <div className="px-3 lg:px-10 py-7 space-y-2">
           {preveiwData.map((data, index) => (
             <div
               key={index}

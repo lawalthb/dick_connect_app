@@ -80,7 +80,7 @@ const CreateAdvert = ({ onSubmit, handlePreviewAd }) => {
             </div>
             <div className="w-fill md:w-1/2">
               <SelectField
-                label="Shedule"
+                label="Schedule"
                 name="shedule"
                 defaultValue=""
                 required={false}
