@@ -9,39 +9,45 @@ import 'swiper/css/navigation';
 import ProfileCard from './Connecting/ProfileCard';
 import Daniella from '@/Images/Daniella.png';
 
-const ProfileCourasel = ({ iconOption, handleOptionClick }) => {
+const ProfileCourasel = ({
+  userConnections,
+  handleOptionClick,
+  userCircles,
+  handleViewProfile,
+}) => {
   const profiles = [
     {
       name: 'Daniella Rosell',
-      age: 32,
-      location: 'Lagos, Nigeria',
+      profession: 'Model',
+      connections: 5,
       image: Daniella.src,
     },
     {
       name: 'Chioma Okeke',
-      age: 28,
-      location: 'Abuja, Nigeria',
+      profession: 'Singer',
+      connections: 7,
       image: Daniella.src,
     },
     {
       name: 'Emmanuel Johnson',
-      age: 30,
-      location: 'Port Harcourt, Nigeria',
+      profession: 'Photographer',
+      connections: 90,
       image: Daniella.src,
     },
   ];
 
   return (
-    <div className="w-full px-4 max-w-[805px] mx-auto">
+    <div className="w-full max-w-[805px] mx-auto">
       <Swiper
+        style={{ '--swiper-navigation-color': '#A20030' }}
         modules={[EffectFlip, Autoplay, Navigation]}
         effect="flip"
         grabCursor={true}
         loop={true}
-        autoplay={{
-          delay: 3000,
-          disableOnInteraction: false,
-        }}
+        // autoplay={{
+        //   delay: 3000,
+        //   disableOnInteraction: false,
+        // }}
         navigation
         pagination={{ clickable: true }}
         className="rounded-[30px]"
@@ -53,8 +59,10 @@ const ProfileCourasel = ({ iconOption, handleOptionClick }) => {
           >
             <ProfileCard
               profile={profile}
-              iconOption={iconOption}
+              userConnections={userConnections}
               handleOptionClick={handleOptionClick}
+              userCircles={userCircles}
+              handleViewProfile={handleViewProfile}
             />
           </SwiperSlide>
         ))}

@@ -3,11 +3,13 @@ import { useForm } from 'react-hook-form';
 import ConnectStory from './ConnectStory';
 import FilterButton from '../FilterButton';
 import Daniella from '@/Images/Daniella.png';
-import { FaCirclePlus } from 'react-icons/fa6';
 import WorldIcon from '@/Images/Icons/WorldIcon.svg';
 import ExpandImageIcon from '@/Images/Icons/ExpandImageIcon.svg';
 import { PiDotsThreeOutlineVertical } from 'react-icons/pi';
 import Modal from '../Modal';
+import Image from 'next/image';
+import SearchField from '../Input/SearchField';
+import Feeds from './Feeds';
 
 const ConnectionFeed = () => {
   const [showFilter, setShowFilter] = useState(false);
@@ -34,81 +36,19 @@ const ConnectionFeed = () => {
       <>
         <div className="flex items-center justify-center gap-3">
           <div className="w-[384px]">
-            <ConnectStory />
+            <SearchField />
           </div>
           <div className="w-[91px]">
             <FilterButton handleFilter={handleFilter} />
           </div>
         </div>
-        <div className="w-[562px] mx-auto my-20">
-          <h3 className="text-black font-medium text-[16px] leading-6">
-            Connect Story
-          </h3>
-          <div className="relative w-[75px]">
-            <img
-              src={Daniella.src}
-              alt="Image"
-              className="object-fill w-[75px] h-[108px] text-black border border-[#A20030] p-1 rounded-[20px] my-5"
-            />
-            <FaCirclePlus className="fill-[#A20030] absolute bottom-2.5 right-2.5 cursor-pointer" />
-          </div>
-          <div className="bg-white rounded-lg pt-5 pb-10">
-            <div className="px-5">
-              <div className="flex justify-between items-center">
-                <div className="pl-16">
-                  <h3 className="text-semibold text-black text-[15px] leading-5">
-                    John Maxwell{' '}
-                    <span className="text-[10px] text-gray-500">
-                      @johnmaxwell
-                    </span>
-                  </h3>
-                  <div className="flex items-center gap-1.5">
-                    <p className="text-semibold text-[#65676B] text-[13px] leading-5">
-                      20 Minutes ago
-                    </p>
-                    <WorldIcon />
-                  </div>
-                </div>
-                <div className="relative">
-                  <PiDotsThreeOutlineVertical
-                    onClick={handleShowMore}
-                    className="text-[#292D32] cursor-pointer"
-                  />
-                  {showMore && (
-                    <div className="absolute z-10 right-7 py-4 pl-3 border border-[#FAFAFA] text-[#2E2E2E] bg-white shadow-lg w-[163px] font-normal text-[12px] leading-6 rounded-[10px]">
-                      <p
-                        onClick={() => handleShowMore('post')}
-                        className="cursor-pointer hover:text-[#A20030]"
-                      >
-                        Report Post
-                      </p>
-                      <p
-                        onClick={() => handleShowMore('delete')}
-                        className="cursor-pointer hover:text-[#A20030]"
-                      >
-                        Delete
-                      </p>
-                    </div>
-                  )}
-                </div>
-              </div>
-              <p className="text-[#050505] font-normal text-[15px] leading-5 mt-3">
-                We had the privilege of designing the website for Foxspeed: an
-                eCommerce solution in WordPress, with cutting-edge design! We
-                invite you to visit the site foxspeed.pt
-              </p>
-            </div>
-            <div className="relative mt-3">
-              <div className="cursor-pointer absolute right-3 top-3 size-[50px] bg-[#000000AD] rounded-full flex items-center justify-center">
-                <ExpandImageIcon onClick={handleExpandImage} />
-              </div>
-              <img
-                src={Daniella.src}
-                alt="Image"
-                className="object-fill w-full h-[250px] text-black "
-              />
-            </div>
-          </div>
+        <div className="w-full lg:w-[562px] mx-auto my-20">
+          <ConnectStory />
+          <Feeds
+            handleExpandImage={handleExpandImage}
+            handleShowMore={handleShowMore}
+            showMore={showMore}
+          />
         </div>
       </>
 

@@ -22,7 +22,7 @@ const Connecting = () => {
           activeTab={activeTab}
         />
       </div>
-      <div className="px-5 md:px-20">
+      <div className="px-1 md:px-20">
         {activeTab === 'Connect with others' && <ConnectWithOthers />}
         {activeTab === 'Connecting Feed' && <ConnectionFeed />}
       </div>

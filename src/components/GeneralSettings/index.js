@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import MainSettings from './MainSettings';
 import Notifications from './Notifications';
 import ProfileSettings from './ProfileSettings';
@@ -9,9 +9,30 @@ import AddExternalLinks from './AddExternalLinks';
 import ConfirmationModal from './ConfirmationModal';
 import LogoutIcon from '@/Images/Icons/LogoutIcon.svg';
 import Subscription from './Subscription';
+import { useRouter } from 'next/router';
 
 const GeneralSettings = () => {
   const [activeSettings, setActiveSettings] = useState({});
+
+  const router = useRouter();
+
+  useEffect(() => {
+    const { active } = router.query;
+
+    if (active) {
+      const normalizedKey = active.replace(/\s+/g, '').toLowerCase();
+
+      const newSettings = Object.fromEntries(
+        Object.keys(activeSettings).map((key) => [key, false]),
+      );
+
+      setActiveSettings({
+        ...newSettings,
+        [normalizedKey]: true,
+      });
+      router.replace('/settings', undefined, { shallow: true });
+    }
+  }, [router.query]);
 
   const handleSettingsClick = (identifier) => {
     const newSettings = Object.fromEntries(
