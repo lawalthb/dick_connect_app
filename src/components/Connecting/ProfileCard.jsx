@@ -34,7 +34,7 @@ const ProfileCard = ({
           <>
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-10" />
 
-            <div className="absolute inset-0 z-20 flex flex-col justify-end px-4 sm:px-10 pb-20 text-white">
+            <div className="absolute inset-0 z-20 flex flex-col justify-end px-4 sm:px-10 pb-10 text-white">
               <div className="max-w-[387px]">
                 <div className="flex items-center gap-2">
                   <h3 className="font-bold text-[24px] md:text-[30px]">
@@ -47,14 +47,14 @@ const ProfileCard = ({
                     height={10}
                   />
                 </div>
-                <p className="font-normal text-[20px] md:text-[24px] mt-2 lg:mt-4">
+                <p className="font-normal text-[20px] md:text-[24px] mt-1">
                   {profile.profession}
                 </p>
-                <p className="font-bold text-[16px] md:text-[20px] mt-3 lg:mt-7">
+                <p className="font-bold text-[16px] md:text-[20px] mt-1">
                   {`Connected: ${profile.connections}`}
                 </p>
 
-                <div className="flex gap-2 sm:gap-4 mb-8 mt-4 items-center justify-start flex-wrap">
+                <div className="flex gap-2 sm:gap-4 mb-8 lg:mb-4 mt-4 items-center justify-start flex-wrap">
                   {userConnections.map((option, index) => (
                     <div
                       key={index}
@@ -72,7 +72,7 @@ const ProfileCard = ({
                   ))}
                 </div>
 
-                <div className="flex flex-wrap gap-2 sm:gap-4 mt-4 items-center justify-start">
+                <div className="flex flex-wrap gap-2 sm:gap-4 mt-2 items-center justify-start">
                   {userCircles.map((option, index) => (
                     <div
                       key={index}
@@ -84,7 +84,7 @@ const ProfileCard = ({
                 </div>
               </div>
 
-              <div className="mt-6 flex gap-x-4 max-w-[650px]">
+              <div className="mt-4 flex gap-x-4 max-w-[650px]">
                 <Button
                   label="Show Circle"
                   variant="outlined"
