@@ -4,7 +4,7 @@ import LineChartComp from '../Charts/LineChartComp';
 import { FormProvider, useForm } from 'react-hook-form';
 import StackedBarChartComp from '../Charts/StackedBarChartComp';
 
-const Performance = ({ handleCreateAd }) => {
+const Performance = ({ handleCreateAd, handlePerformanceData }) => {
   const methods = useForm();
   const performanceData = [
     {
@@ -64,8 +64,9 @@ const Performance = ({ handleCreateAd }) => {
         <div className="flex gap-4 min-w-max grid-cols-5">
           {performanceData.map((data, index) => (
             <div
+              onClick={() => handlePerformanceData(data.name)}
               key={index}
-              className="flex justify-between bg-[#A200301C] rounded-[16px] w-[227px] text-[#2E2E2E] p-6 shrink-0"
+              className="flex justify-between cursor-pointer bg-[#A200301C] rounded-[16px] w-[227px] text-[#2E2E2E] p-6 shrink-0"
             >
               <div>
                 <p className="font-normal text-[12px] leading-6 w-max">

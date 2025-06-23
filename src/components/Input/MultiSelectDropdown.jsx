@@ -1,5 +1,5 @@
+import DropDownIcon from '@/Images/Icons/DropDownIcon';
 import { useEffect, useRef, useState } from 'react';
-import DropDownIcon from '@/Images/icons/DropDownIcon.svg';
 
 const MultiSelectDropdown = ({
   options = [],
@@ -31,7 +31,7 @@ const MultiSelectDropdown = ({
       <button
         type="button"
         onClick={toggleDropdown}
-        className="w-full text-base rounded-[10px] hover:border hover:border-[#A20030] text-gray-500 px-3 py-2 h-14 text-left bg-[rgba(162,0,48,0.29)] shadow-sm focus:outline-none focus:border-[#A20030] focus:border-2 transition duration-300 ease-in-out"
+        className="w-full text-base rounded-[10px] hover:border hover:border-[#A20030] text-gray-500 px-1 py-2 h-14 text-left bg-[rgba(162,0,48,0.29)] shadow-sm focus:outline-none focus:border-[#A20030] focus:border-2 transition duration-300 ease-in-out"
       >
         <div className="flex items-center justify-between w-full">
           <div>
@@ -39,7 +39,7 @@ const MultiSelectDropdown = ({
               ? selectedOptions.join(', ')
               : 'Select options'}
           </div>
-          <DropDownIcon className="text-gray-500" />
+          <DropDownIcon className="fill-gray-500" />
         </div>
       </button>
 

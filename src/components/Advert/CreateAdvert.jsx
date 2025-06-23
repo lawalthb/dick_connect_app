@@ -75,7 +75,18 @@ const CreateAdvert = ({ onSubmit, handlePreviewAd }) => {
           <div className="w-full">
             <MultiSelectDropdown
               label="Ad Placement"
-              options={['Swipe Page', 'Sports', 'Live Stream', 'Just Connect']}
+              options={[
+                'Swipe Page1',
+                'Sports1',
+                'Live Stream1',
+                'Just Connect1',
+                'Swipe Page',
+                'Sports',
+                'Live Stream',
+                'Just Connect',
+                'Live Stream2',
+                'Just Connect2',
+              ]}
               selectedOptions={selectedOptions}
               handleOptionToggle={handleOptionToggle}
             />

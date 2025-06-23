@@ -4,10 +4,12 @@ import Performance from './Performance';
 import CreateAdvert from './CreateAdvert';
 import Preview from './Preveiw';
 import ConfirmAd from './ConfirmAd';
+import AdvertListings from './AdvertListings';
 
 const Advert = () => {
   const [createAd, setCreateAd] = useState(false);
   const [preveiwAd, setPreviewAd] = useState(false);
+  const [performanceTable, setPerformanceTable] = useState(false);
   const [previewData, setPreviewData] = useState(null);
   const [confirmAd, setConfirmAd] = useState(null);
 
@@ -36,14 +38,22 @@ const Advert = () => {
     setPreviewAd(true);
   };
 
+  const handlePerformanceData = (id) => {
+    console.log('Performance data clicked:', id);
+    setPerformanceTable((prev) => !prev);
+  };
+
   return (
     <div className="mx-7 lg:mx-28 my-16">
       {(createAd || preveiwAd) && (
         <BackToPreviousScreen onBackClick={handleBackToPerformance} />
       )}
 
-      {!createAd && !preveiwAd && (
-        <Performance handleCreateAd={handleCreateAd} />
+      {!createAd && !preveiwAd && !performanceTable && (
+        <Performance
+          handleCreateAd={handleCreateAd}
+          handlePerformanceData={handlePerformanceData}
+        />
       )}
       {preveiwAd && (
         <Preview
@@ -66,6 +76,7 @@ const Advert = () => {
           handleConfirm={handleConfirmAd}
         />
       )}
+      {performanceTable && <AdvertListings />}
     </div>
   );
 };
