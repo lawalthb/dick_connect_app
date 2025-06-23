@@ -14,9 +14,11 @@ const ConnectWithOthersDetail = () => {
 
   const router = useRouter();
   const userConnections = [
-    { id: 'cancel', image: Daniella },
-    { id: 'heart', image: Daniella },
-    { id: 'chat', image: Daniella },
+    { id: 1, image: Daniella },
+    { id: 2, image: Daniella },
+    { id: 3, image: Daniella },
+    { id: 4, image: Daniella },
+    { id: 5, image: Daniella },
   ];
   const userCircles = [
     { id: 1, circle: 'Music' },

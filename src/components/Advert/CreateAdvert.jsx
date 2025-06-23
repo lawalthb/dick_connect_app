@@ -4,14 +4,24 @@ import SelectField from '../Input/SelectField';
 import ImageUpload from '../ImageUpload';
 import Checkbox from '../Checkbox';
 import Button from '../Button';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import MultiSelectDropdown from '../Input/MultiSelectDropDown';
 
 const CreateAdvert = ({ onSubmit, handlePreviewAd }) => {
+  const [selectedOptions, setSelectedOptions] = useState([]);
   const methods = useForm();
   const { control } = methods;
 
   // Watch all fields
   const allValues = useWatch({ control });
+
+  const handleOptionToggle = (option) => {
+    setSelectedOptions((prev) =>
+      prev.includes(option)
+        ? prev.filter((item) => item !== option)
+        : [...prev, option],
+    );
+  };
 
   return (
     <div className="w-[90%] lg:w-[70%] mx-auto mt-10">
@@ -35,7 +45,7 @@ const CreateAdvert = ({ onSubmit, handlePreviewAd }) => {
               />
             </div>
             <div className="flex gap-10 w-full md:w-1/2">
-              <SelectField
+              {/* <SelectField
                 label="Ad Placement"
                 name="ad_placement"
                 defaultValue=""
@@ -46,7 +56,8 @@ const CreateAdvert = ({ onSubmit, handlePreviewAd }) => {
                     {placement}
                   </option>
                 ))}
-              </SelectField>
+              </SelectField> */}
+
               <SelectField
                 label="Target Audience"
                 name="target_audience"
@@ -60,6 +71,14 @@ const CreateAdvert = ({ onSubmit, handlePreviewAd }) => {
                 ))}
               </SelectField>
             </div>
+          </div>
+          <div className="w-full">
+            <MultiSelectDropdown
+              label="Ad Placement"
+              options={['Swipe Page', 'Sports', 'Live Stream', 'Just Connect']}
+              selectedOptions={selectedOptions}
+              handleOptionToggle={handleOptionToggle}
+            />
           </div>
           <div className="flex flex-col md:flex-row gap-10 w-full">
             <div className="flex gap-4 w-full md:w-1/2">
