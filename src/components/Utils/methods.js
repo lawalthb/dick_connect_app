@@ -1,3 +1,17 @@
+import { exportToCsv } from './exportToCsv';
+import { exportToExcel } from './exportToExcel';
+import { exportToPdf } from './exportToPdf';
+
+export const handleExport = (format, adsData, columns) => {
+  if (format === 'pdf') {
+    exportToPdf(adsData, columns);
+  } else if (format === 'csv') {
+    exportToCsv('advert-data.csv', columns, adsData);
+  } else if (format === 'excel') {
+    exportToExcel(adsData, columns);
+  }
+};
+
 export const getFormFieldError = (errors, name) => {
   // Handle nested paths like "question.0.type"
   if (!name || !errors) return undefined;

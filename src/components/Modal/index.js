@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { IoClose } from 'react-icons/io5';
 import FilterModalIcon from '@/Images/Icons/FilterModalIcon.svg';
+import ExportIcon from '@/Images/Icons/ExportIcon.svg';
 
 const Modal = ({
   isOpen,
@@ -9,6 +10,7 @@ const Modal = ({
   children,
   size = 'max-w-lg',
   showFilterIcon = false,
+  showExportIcon = false,
 }) => {
   useEffect(() => {
     const handleEsc = (e) => {
@@ -33,6 +35,7 @@ const Modal = ({
         {title && (
           <div className="flex items-center gap-3">
             {showFilterIcon && <FilterModalIcon />}
+            {showExportIcon && <ExportIcon />}
             <h2 className="text-xl font-semibold text-gray-800">{title}</h2>
           </div>
         )}

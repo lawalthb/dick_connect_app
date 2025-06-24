@@ -16,7 +16,9 @@ const ConfirmAd = ({
         <TickIcon />
       </div>
       <div className="mt-5 text-[#5C5C5C] text-center">
-        <h3 className=" font-semibold text-[28px] leading-8">{title}</h3>
+        <h3 className=" font-semibold text-[28px] leading-8 capitalize">
+          {title}
+        </h3>
         <p className="font-normal text-base leading-6 my-14 mx-16">
           {description}
         </p>

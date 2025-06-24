@@ -1,7 +1,13 @@
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import Table from '../Table';
 import SearchField from '../Input/SearchField';
 import FilterButton from '../FilterButton';
+import FilterModal from '../Modal/FilterModal';
+import { FormProvider, useForm } from 'react-hook-form';
+import InputField from '../Input/InputField';
+import Button from '../Button';
+import RadioGroup from '../Input/RadioGroup';
+import ConfirmAd from './ConfirmAd';
 
 const columns = [
   { key: 'name', label: 'Ad Name' },
@@ -129,30 +135,93 @@ const adsData = [
 ];
 
 const AdvertListings = () => {
+  const [showFilter, setShowFilter] = useState(false);
+
+  const [confirmAd, setConfirmAd] = useState(null);
+  const [confirmData, setConfirmData] = useState('');
+
+  const methods = useForm({
+    defaultValues: {
+      status: 'active',
+    },
+  });
+  const onSubmit = (data) => {
+    console.log(data);
+  };
   const handleClick = (actionKey) => {
     console.log(`Action performed: ${actionKey}`);
+    setConfirmData(actionKey);
+
+    handleConfirmAd();
   };
-  const handleFilter = () => {};
+  const handleFilter = () => {
+    setShowFilter((prev) => !prev);
+  };
+  const handleConfirmAd = () => {
+    setConfirmAd((prev) => !prev);
+  };
+
   return (
     <>
-      <div className="flex items-center justify-center gap-3 ml-auto max-w-md">
-        <div className="w-[384px]">
-          <SearchField />
-        </div>
-        <div className="w-[91px]">
-          <FilterButton handleFilter={handleFilter} />
-        </div>
-      </div>
       <Table
         adsData={adsData}
         columns={columns}
         handleClick={handleClick}
         actionOptions={[
-          { key: 'pause', label: 'Pause Ad' },
-          { key: 'stop', label: 'Stop Ad' },
-          { key: 'delete', label: 'Delete Ad' },
+          { key: 'paused', label: 'Pause Ad' },
+          { key: 'stopped', label: 'Stop Ad' },
+          { key: 'deleted', label: 'Delete Ad' },
         ]}
+        handleFilter={handleFilter}
       />
+      {showFilter && (
+        <FilterModal showFilter={showFilter} handleFilter={handleFilter}>
+          <FormProvider {...methods}>
+            <form
+              onSubmit={methods.handleSubmit(onSubmit)}
+              className="space-y-4 my-5"
+            >
+              <RadioGroup control={methods.control} name="status" />
+              <InputField
+                label={'Ad Name'}
+                type="text"
+                name={'name'}
+                required={false}
+              />
+              <div className="flex justify-between gap-x-10 w-full">
+                <InputField
+                  label={'Start Date'}
+                  type="date"
+                  name={'start_date'}
+                  required={false}
+                />
+                <InputField
+                  label={'End Date'}
+                  type="date"
+                  name={'end_date'}
+                  required={false}
+                />
+              </div>
+
+              <Button
+                type="submit"
+                label="Apply Filter"
+                className="w-full h-14"
+              />
+            </form>
+          </FormProvider>
+        </FilterModal>
+      )}
+
+      {confirmAd && (
+        <ConfirmAd
+          isOpen={confirmAd}
+          onClose={handleConfirmAd}
+          title={`Advert ${confirmData}`}
+          description={`You have successfully ${confirmData} this advert`}
+          handleConfirm={handleConfirmAd}
+        />
+      )}
     </>
   );
 };

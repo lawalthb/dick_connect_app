@@ -7,10 +7,17 @@ import Button from '../Button';
 import { useRouter } from 'next/router';
 import UserProfile from './UserProfile';
 import BackToPreviousScreen from '../BackToPreviousScreen';
+import { FormProvider, useForm } from 'react-hook-form';
+import InputField from '../Input/InputField';
 
 const ConnectWithOthersDetail = () => {
   const [showFilter, setShowFilter] = useState(false);
   const [profile, setProfile] = useState(false);
+
+  const methods = useForm();
+  const onSubmit = (data) => {
+    console.log(data);
+  };
 
   const router = useRouter();
   const userConnections = [
@@ -66,7 +73,38 @@ const ConnectWithOthersDetail = () => {
           />
 
           {showFilter && (
-            <FilterModal showFilter={showFilter} handleFilter={handleFilter} />
+            <FilterModal showFilter={showFilter} handleFilter={handleFilter}>
+              <FormProvider {...methods}>
+                <form
+                  onSubmit={methods.handleSubmit(onSubmit)}
+                  className="space-y-4 my-5"
+                >
+                  <InputField
+                    label={'Age'}
+                    type="text"
+                    name={'age'}
+                    required={false}
+                  />
+                  <InputField
+                    label={'Language'}
+                    type="text"
+                    name={'language'}
+                    required={false}
+                  />
+                  <InputField
+                    label={'Interest'}
+                    type="text"
+                    name={'interest'}
+                    required={false}
+                  />
+                  <Button
+                    type="submit"
+                    label="Apply Filter"
+                    className="w-full h-14"
+                  />
+                </form>
+              </FormProvider>
+            </FilterModal>
           )}
         </div>
       )}

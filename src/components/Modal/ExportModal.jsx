@@ -1,24 +1,24 @@
 import PropTypes from 'prop-types';
 import Modal from '.';
 
-const FilterModal = ({ showFilter, handleFilter, children }) => {
+const ExportModal = ({ showExport, handleExport, children }) => {
   return (
     <Modal
-      isOpen={showFilter}
-      onClose={handleFilter}
-      title="Filter"
+      isOpen={showExport}
+      onClose={handleExport}
+      title="Export List"
       size="max-w-xl"
-      showFilterIcon={true}
+      showExportIcon={true}
     >
       {children}
     </Modal>
   );
 };
 
-FilterModal.propTypes = {
+ExportModal.propTypes = {
   showFilter: PropTypes.bool.isRequired,
   handleFilter: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
 };
 
-export default FilterModal;
+export default ExportModal;
