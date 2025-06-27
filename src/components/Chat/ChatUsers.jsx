@@ -14,7 +14,7 @@ const ChatUsers = ({ users, onSelectUser }) => {
       </div>
 
       {hasUsers ? (
-        <div className="space-y-3 overflow-y-auto h-[calc(100svh-10rem)] pr-2">
+        <div className="space-y-3 overflow-y-auto h-[calc(100svh-14rem)] pr-2">
           {users.map((user) => (
             <div
               key={user.id}

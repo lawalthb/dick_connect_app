@@ -26,7 +26,7 @@ const ChatRoom = ({ user, messages, onSend, onBack }) => {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100svh-4rem)] ">
+    <div className="flex flex-col h-[calc(100svh-8rem)] ">
       <div className="flex items-center gap-3 px-4 py-3 border-b">
         <button
           type="button"

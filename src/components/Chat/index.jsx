@@ -32,7 +32,7 @@ const ChatView = () => {
   };
 
   return (
-    <div className="flex h-[calc(100svh-5rem)] w-full md:w-[90%] mx-auto">
+    <div className="flex w-full md:w-[90%] mx-auto">
       <div
         className={`w-full md:w-1/3 ${selectedUser ? 'hidden md:block' : 'block'}`}
       >
