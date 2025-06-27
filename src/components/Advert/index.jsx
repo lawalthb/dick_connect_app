@@ -26,6 +26,7 @@ const Advert = () => {
       setCreateAd(true);
     } else {
       setCreateAd(false);
+      setPerformanceTable(false);
     }
   };
   const onSubmit = (data) => {
@@ -45,7 +46,7 @@ const Advert = () => {
 
   return (
     <div className="mx-7 lg:mx-28 my-16">
-      {(createAd || preveiwAd) && (
+      {(createAd || preveiwAd || performanceTable) && (
         <BackToPreviousScreen onBackClick={handleBackToPerformance} />
       )}
 
@@ -76,7 +77,7 @@ const Advert = () => {
           handleConfirm={handleConfirmAd}
         />
       )}
-      {performanceTable && <AdvertListings />}
+      <div className="-mx-10">{performanceTable && <AdvertListings />}</div>
     </div>
   );
 };
