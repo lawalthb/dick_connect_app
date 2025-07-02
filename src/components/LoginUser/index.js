@@ -5,6 +5,9 @@ import AuthHeader from './AuthHeader';
 import { useCallback, useState } from 'react';
 import ConnectAppIcon from '@/Images/Icons/ConnectAppIcon.svg';
 import { useRouter } from 'next/router';
+import { useMutation } from '@tanstack/react-query';
+import { signIn } from '../Utils/api';
+import ErrorMsg from '../ErrorMsg';
 
 const LoginUser = () => {
   const router = useRouter();
@@ -13,20 +16,41 @@ const LoginUser = () => {
     password: false,
     reset: false,
   });
+  const [loginData, setLoginData] = useState({});
   const methods = useForm();
 
-  const onSubmit = (data) => {
-    const heading = data.confirm_password
+  const { mutate, isPending, isSuccess, isError, error } = useMutation({
+    mutationFn: signIn,
+    onSuccess: () => {
+      handleSuccessfulLogin();
+    },
+    onError: (err) => {
+      console.error('Sign In failed:', err.message);
+    },
+  });
+
+  const handleSuccessfulLogin = () => {
+    const heading = loginData.confirm_password
       ? 'Reset Password'
       : 'Confirm your Email';
-    const subHeading = data.confirm_password
+    const subHeading = loginData.confirm_password
       ? 'Input the code to reset your password'
       : 'Input the code to complete the verification process';
     router.push({
       pathname: '/2fa',
-      query: { email: data.email, heading, subHeading },
+      query: { email: loginData.email, heading, subHeading },
     });
-    console.log(data);
+  };
+
+  const onSubmit = (data) => {
+    setLoginData(data);
+    const payload = {
+      email: data.email,
+      password: data.password,
+      remember_me: true,
+      device_token: 'sample-device-token-for-push-notifications',
+    };
+    mutate(payload);
   };
 
   const handlePassword = useCallback((identifier) => {
@@ -113,7 +137,12 @@ const LoginUser = () => {
                 >
                   Reset Password
                 </p>
-                <Button label="Login" type="submit" btnclass="w-full" />
+                <Button
+                  label="Login"
+                  type="submit"
+                  btnclass="w-full"
+                  isLoading={isPending}
+                />
                 <div className="flex items-center justify-center gap-2 mt-5">
                   <span className="text-base text-[#5C5C5C] font-normal leading-6">
                     Don’t have an account?
@@ -189,6 +218,7 @@ const LoginUser = () => {
             </>
           )}
         </FormProvider>
+        <ErrorMsg errorMessage={error?.message} />
       </div>
     </>
   );

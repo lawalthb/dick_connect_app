@@ -8,6 +8,11 @@ import AuthHeader from '../LoginUser/AuthHeader';
 import SelectField from '../Input/SelectField';
 import ImageUpload from '../ImageUpload';
 import AuthFooter from './AuthFooter';
+import { signUp } from '../Utils/api';
+import { useMutation } from '@tanstack/react-query';
+import ErrorMsg from '../ErrorMsg';
+import { dataURLtoFile } from '../Utils/methods';
+import CountrySelect from '../Input/CountrySelect';
 
 const SignUpUser = () => {
   const router = useRouter();
@@ -17,8 +22,26 @@ const SignUpUser = () => {
   });
   const methods = useForm();
 
+  const { mutate, isPending, isSuccess, isError, error } = useMutation({
+    mutationFn: signUp,
+    onSuccess: (data) => {
+      console.log('Signup successful:', data);
+    },
+    onError: (err) => {
+      console.error('Signup failed:', err.message);
+    },
+  });
+
   const onSubmit = (data) => {
-    console.log(data);
+    const payload = {
+      name: `${data.first_name} ${data.last_name}`,
+      email: data.email,
+      password: data.password,
+      username: `${data.first_name} ${data.last_name}`,
+      country_id: 1,
+      profile_image: data.identityMedia,
+    };
+    mutate(payload);
   };
 
   const handleSignUpSTeps = useCallback((identifier) => {
@@ -75,7 +98,12 @@ const SignUpUser = () => {
                     type="password"
                     name={'password'}
                   />
-                  <SelectField label="Gender" name="gender" defaultValue="">
+                  <SelectField
+                    label="Gender"
+                    name="gender"
+                    defaultValue=""
+                    required={false}
+                  >
                     {['Male', 'Female'].map((gender) => (
                       <option key={gender} value={gender}>
                         {gender}
@@ -99,13 +127,17 @@ const SignUpUser = () => {
                 onSubmit={methods.handleSubmit(onSubmit)}
                 className="space-y-4"
               >
-                <SelectField
+                <CountrySelect
+                  name="country"
                   label="Location"
-                  name="location"
-                  defaultValue=""
-                  type="country"
+                  required={false}
                 />
-                <SelectField label="Language" name="language" defaultValue="">
+                <SelectField
+                  label="Language"
+                  name="language"
+                  defaultValue=""
+                  required={false}
+                >
                   {['English', 'French'].map((language) => (
                     <option key={language} value={language}>
                       {language}
@@ -117,12 +149,14 @@ const SignUpUser = () => {
                   label="Create Account"
                   type="submit"
                   btnclass="w-full mt-10 h-14"
+                  isLoading={isPending}
                 />
                 <AuthFooter handleLogIn={handleLogIn} />
               </form>
             </>
           )}
         </FormProvider>
+        <ErrorMsg errorMessage={error?.message} />
       </div>
     </>
   );
