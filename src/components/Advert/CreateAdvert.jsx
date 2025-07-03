@@ -5,7 +5,7 @@ import ImageUpload from '../ImageUpload';
 import Checkbox from '../Checkbox';
 import Button from '../Button';
 import { useEffect, useState } from 'react';
-import MultiSelectDropdown from '../Input/MultiSelectDropDown';
+import MultiSelectDropdown from '@/components/Input/MultiSelectDropdown';
 
 const CreateAdvert = ({ onSubmit, handlePreviewAd }) => {
   const [selectedOptions, setSelectedOptions] = useState([]);
