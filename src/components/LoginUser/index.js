@@ -10,7 +10,7 @@ import { forgotPassword, signIn } from '../Utils/api';
 import ErrorMsg from '../ErrorMsg';
 import useFormStore from '@/zustandStore/useFormStore';
 import useUserStore from '@/zustandStore/useUserStore';
-import { useHandleOtpRoute } from '@/Hooks/customHooks';
+import { useHandleOtpRoute } from '../Hooks/CustomHooks';
 
 const LoginUser = () => {
   const router = useRouter();
