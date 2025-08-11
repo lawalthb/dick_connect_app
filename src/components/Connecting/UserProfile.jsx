@@ -16,29 +16,34 @@ import 'swiper/css';
 import 'swiper/css/effect-flip';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
+import { useQuery } from '@tanstack/react-query';
+import { getUser } from '../Utils/api';
+import Loader from '../Loader/Loader';
 
-const UserProfile = () => {
+const UserProfile = ({ userData }) => {
   const [expandImage, setExpandImage] = useState(false);
   const [showMore, setShowMore] = useState(false);
+  const [showComment, setShowComment] = useState(false);
+  const [id, setId] = useState(false);
+  const [feedId, setFeedId] = useState(false);
+  const [url, setUrl] = useState('');
 
-  const connectOptions = [
-    {
-      name: 'Just Connect!',
-      icon: <JustConnectIcon aria-label="Just Connect Icon" />,
-    },
-    { name: 'Sport', icon: <SportIcon aria-label="Sport Icon" /> },
-    {
-      name: 'Health & Fitness',
-      icon: <HealthAndFitness aria-label="Health & Fitness Icon" />,
-    },
-    { name: 'Business', icon: <BusinessIcon aria-label="Business Icon" /> },
-  ];
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ['getUser', userData.id],
+    queryFn: () => getUser(userData.id),
+    enabled: !!userData.id,
+  });
 
-  const handleExpandImage = () => {
+  const handleExpandImage = (url) => {
+    setUrl(url);
     setExpandImage((prev) => !prev);
   };
 
-  const handleShowMore = (identifier) => {
+  const handleShowMore = (identifier, id) => {
+    if (id) {
+      setId(id);
+    }
+    setId;
     if (identifier === 'post') {
       console.log(identifier);
     } else if (identifier === 'delete') {
@@ -46,6 +51,25 @@ const UserProfile = () => {
     }
     setShowMore((prev) => !prev);
   };
+
+  const handleComment = (id) => {
+    setFeedId(id);
+    setShowComment((prev) => !prev);
+  };
+
+  if (isLoading) return <Loader />;
+
+  const user_data = data?.data[0];
+
+  const newObj = {
+    profile_url: user_data?.profile_url,
+    alt_text: 'Main Picture',
+  };
+  const profileImages = user_data?.profile_images || [];
+
+  const combinedImages = [newObj, ...profileImages];
+
+  console.log(combinedImages, 'profileImages');
 
   return (
     <div>
@@ -62,10 +86,10 @@ const UserProfile = () => {
           }}
           className="rounded-[30px]"
         >
-          {[Daniella, Daniella, Daniella].map((img, index) => (
+          {combinedImages?.map((img, index) => (
             <SwiperSlide key={index}>
               <Image
-                src={img}
+                src={img.profile_url}
                 alt={`Profile Image ${index + 1}`}
                 width={805}
                 height={783}
@@ -86,19 +110,35 @@ const UserProfile = () => {
           }
         `}</style> */}
       </div>
-      <ProfileDetail />
-      <ConnectCategiries connectOptions={connectOptions} isProfile={true} />
-      <ConnectStory extraStyle="text-[24px]" />
-      <Feeds
-        handleExpandImage={handleExpandImage}
-        handleShowMore={handleShowMore}
-        showMore={showMore}
+      <ProfileDetail userData={user_data} />
+      <ConnectCategiries
+        socialCircles={user_data?.social_circles}
+        isProfile={true}
+        extraClass="max-h-[480px] overflow-y-auto scrollbar-hidden"
       />
+      <ConnectStory extraStyle="text-[24px]" />
+      {user_data?.recent_posts.map((post) => {
+        return (
+          <div key={post.id} className="mb-5">
+            <Feeds
+              feed={post}
+              handleExpandImage={handleExpandImage}
+              handleShowMore={handleShowMore}
+              showMore={showMore}
+              handleComment={handleComment}
+              showComment={showComment}
+              clickedId={id}
+              feedId={feedId}
+            />
+          </div>
+        );
+      })}
+
       {expandImage && (
         <Modal isOpen={expandImage} onClose={handleExpandImage} size="max-w-xl">
           {' '}
           <img
-            src={Daniella.src}
+            src={url}
             alt="Image"
             className="object-fill w-full text-black pr-1.5"
           />

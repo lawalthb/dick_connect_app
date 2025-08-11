@@ -10,16 +10,89 @@ import ConfirmationModal from './ConfirmationModal';
 import LogoutIcon from '@/Images/Icons/LogoutIcon.svg';
 import Subscription from './Subscription';
 import { useRouter } from 'next/router';
+import { useMutation, useQuery } from '@tanstack/react-query';
+import {
+  changePassword,
+  deleteAccount,
+  getCountry,
+  getProfileImages,
+  getSubscription,
+  useLogout,
+} from '../Utils/api';
+import Loader from '../Loader/Loader';
+import useUserStore from '@/zustandStore/useUserStore';
+import ProfileImage from './ProfileImage';
+import VerifyMe from './VerifyMe';
 
 const GeneralSettings = () => {
   const [activeSettings, setActiveSettings] = useState({});
+  const [socialId, setSocialId] = useState(null);
 
   const router = useRouter();
 
+  const { user, loading, refreshUser } = useUserStore();
+
+  const { logout, isLoggingOut } = useLogout();
+
+  const { data, isLoading } = useQuery({
+    queryKey: ['subscription'],
+    queryFn: getSubscription,
+  });
+
+  const { data: profileImages, isLoading: isLoadingProfileImages } = useQuery({
+    queryKey: ['profileImages'],
+    queryFn: getProfileImages,
+  });
+
+  const { data: countryList, isLoading: isLoadingCountry } = useQuery({
+    queryKey: ['country'],
+    queryFn: getCountry,
+  });
+
+  const {
+    mutate: changePasswordMutation,
+    isPending: isLoadingChangePassword,
+    isSuccess: isChangePasswordSuccess,
+    isError: isChangePasswordError,
+    error: changePasswordError,
+    reset: resetChangePasswordMutation,
+  } = useMutation({
+    mutationFn: changePassword,
+    onSuccess: () => {
+      setTimeout(() => {
+        resetChangePasswordMutation();
+        handleBackToHomePage();
+      }, 2000);
+    },
+    onError: (err) => {
+      console.error('Change password failed:', err.message);
+    },
+  });
+
+  const {
+    mutate: deleteAccountMutation,
+    isPending: isLoadingDeleteAccount,
+    isSuccess: isDeleteAccountSuccess,
+    isError: isDeleteAccountError,
+    error: deleteAccountError,
+  } = useMutation({
+    mutationFn: deleteAccount,
+    onSuccess: () => {
+      setTimeout(() => {
+        logout();
+      }, 2000);
+    },
+    onError: (err) => {
+      console.error('Delete account failed:', err.message);
+    },
+  });
+
   useEffect(() => {
     const { active } = router.query;
+    const { id } = router.query;
 
     if (active) {
+      setSocialId(id);
       const normalizedKey = active.replace(/\s+/g, '').toLowerCase();
 
       const newSettings = Object.fromEntries(
@@ -30,7 +103,7 @@ const GeneralSettings = () => {
         ...newSettings,
         [normalizedKey]: true,
       });
-      router.replace('/settings', undefined, { shallow: true });
+      // router.replace('/settings', undefined, { shallow: true });
     }
   }, [router.query]);
 
@@ -45,34 +118,38 @@ const GeneralSettings = () => {
       ...newSettings,
       [normalizedKey]: true,
     });
-
-    console.log('Active:', {
-      ...newSettings,
-      [normalizedKey]: true,
-    });
   };
 
   const allInactive = Object.values(activeSettings).every((value) => !value);
 
   const handleBackToHomePage = useCallback(() => {
+    const { id } = router.query;
+    console.log(id);
+    if (id) {
+      router.push(`/connecting?active=categories&id=${id}`);
+
+      return;
+    }
     setActiveSettings({});
   }, []);
 
   const onSubmitNewPassword = (data) => {
-    console.log(data);
+    changePasswordMutation(data);
   };
-  const onSubmitNewCountry = (data) => {
-    console.log(data);
+
+  const onSubmitVerification = (data) => {
+    // changePasswordMutation(data);
   };
-  const onSubmitExternalLinks = (data) => {
-    console.log(data);
-  };
+
   const handleLogout = () => {
-    console.log('Logout');
+    logout();
   };
-  const handleDelete = () => {
-    console.log('Delete');
+  const handleDelete = (data) => {
+    deleteAccountMutation(data);
   };
+
+  if (isLoading || isLoadingCountry || isLoadingProfileImages)
+    return <Loader />;
 
   return (
     <div className="mt-16 pb-60">
@@ -82,26 +159,49 @@ const GeneralSettings = () => {
         </div>
       )}
       {allInactive && (
-        <MainSettings handleSettingsClick={handleSettingsClick} />
+        <MainSettings
+          handleSettingsClick={handleSettingsClick}
+          userData={user}
+          profileImages={profileImages?.data?.images}
+          mainProfileImage={profileImages?.data?.main_profile_image}
+        />
       )}
       {activeSettings.notification && <Notifications />}
-      {activeSettings.accountsetting && <ProfileSettings />}
-      {activeSettings.subscription && <Subscription />}
+      {activeSettings.accountsetting && (
+        <ProfileSettings countryList={countryList?.data?.countries} />
+      )}
+      {activeSettings.subscription && <Subscription data={data?.data} />}
+      <ProfileImage
+        show={activeSettings.profileimage}
+        onClose={handleBackToHomePage}
+        data={data?.data}
+        profileImages={profileImages?.data?.images}
+      />
 
+      <VerifyMe
+        activeSettings={activeSettings}
+        handleBackToHomePage={handleBackToHomePage}
+        onSubmitVerification={onSubmitVerification}
+        // error={changePasswordError}
+        // isLoading={isLoadingChangePassword}
+        // isSuccess={isChangePasswordSuccess}
+      />
       <ChangePassword
         activeSettings={activeSettings}
         handleBackToHomePage={handleBackToHomePage}
         onSubmitNewPassword={onSubmitNewPassword}
+        error={changePasswordError}
+        isLoading={isLoadingChangePassword}
+        isSuccess={isChangePasswordSuccess}
       />
       <ChangeCountry
         activeSettings={activeSettings}
         handleBackToHomePage={handleBackToHomePage}
-        onSubmitNewCountry={onSubmitNewCountry}
+        countryList={countryList?.data?.countries}
       />
       <AddExternalLinks
         activeSettings={activeSettings}
         handleBackToHomePage={handleBackToHomePage}
-        onSubmitNewCountry={onSubmitExternalLinks}
       />
       <ConfirmationModal
         activeSettings={activeSettings.logout}
@@ -111,6 +211,7 @@ const GeneralSettings = () => {
         handleConfirm={handleLogout}
         confrimLabel={'Logout'}
         icon={() => <LogoutIcon />}
+        isLoading={isLoggingOut}
       />
       <ConfirmationModal
         activeSettings={activeSettings.deleteaccount}
@@ -120,6 +221,9 @@ const GeneralSettings = () => {
         handleConfirm={handleDelete}
         confrimLabel={'Delete'}
         icon={() => <LogoutIcon />}
+        error={deleteAccountError}
+        isSuccess={isDeleteAccountSuccess}
+        isLoading={isLoadingDeleteAccount}
       />
     </div>
   );

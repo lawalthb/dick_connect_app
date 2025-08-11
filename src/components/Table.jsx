@@ -15,6 +15,8 @@ const Table = ({
   handleClick,
   actionOptions,
   handleFilter,
+  pagination,
+  onPageChange,
 }) => {
   const [openDropdown, setOpenDropdown] = useState(null);
   const [showExport, setShowExport] = useState(false);
@@ -71,7 +73,7 @@ const Table = ({
           <table className="min-w-full text-sm text-left">
             <thead className="bg-gray-100 text-gray-600 sticky top-0 z-10">
               <tr>
-                {columns.map((col) => (
+                {columns?.map((col) => (
                   <th
                     key={col.key}
                     className="px-6 py-3 font-medium whitespace-nowrap"
@@ -82,7 +84,7 @@ const Table = ({
               </tr>
             </thead>
             <tbody className="text-gray-700">
-              {adsData.map((ad) => (
+              {adsData?.map((ad) => (
                 <tr key={ad.id} className="border-t hover:bg-gray-50">
                   {columns.map((col) => (
                     <td
@@ -116,11 +118,12 @@ const Table = ({
                               onClose={() => toggleDropdown(null)}
                               handleClick={handleClick}
                               items={actionOptions}
+                              advert={ad}
                             />
                           )}
                         </div>
                       ) : (
-                        ad[col.key]
+                        <span className="capitalize">{ad[col.key]}</span>
                       )}
                     </td>
                   ))}
@@ -171,6 +174,7 @@ const Table = ({
                               onClose={() => toggleDropdown(null)}
                               handleClick={handleClick}
                               items={actionOptions}
+                              advert={ad}
                             />
                           )}
                         </div>
@@ -185,6 +189,42 @@ const Table = ({
           ))}
         </div>
       </div>
+      {pagination && (
+        <div className="flex justify-center items-center mt-6 gap-2">
+          <button
+            onClick={() => onPageChange(pagination.current_page - 1)}
+            disabled={pagination.current_page === 1}
+            className="px-3 py-2 border rounded text-sm text-gray-700 hover:bg-gray-100 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
+          >
+            Prev
+          </button>
+
+          {Array.from({ length: pagination.last_page }, (_, i) => i + 1).map(
+            (page) => (
+              <button
+                key={page}
+                onClick={() => onPageChange(page)}
+                className={`px-3 py-2 border rounded text-sm ${
+                  page === pagination.current_page
+                    ? 'bg-[#A20030] text-white'
+                    : 'text-gray-700 hover:bg-gray-100 cursor-pointer'
+                }`}
+              >
+                {page}
+              </button>
+            ),
+          )}
+
+          <button
+            onClick={() => onPageChange(pagination.current_page + 1)}
+            disabled={pagination.current_page === pagination.last_page}
+            className="px-3 py-2 border rounded text-sm text-gray-700 hover:bg-gray-100 disabled:opacity-50 cursor-pointer disabled:cursor-not-allowed"
+          >
+            Next
+          </button>
+        </div>
+      )}
+
       {showExport && (
         <ExportModal showExport={showExport} handleExport={handleExportModal}>
           <div className="flex flex-col gap-4">

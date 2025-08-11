@@ -8,11 +8,18 @@ import AuthHeader from '../LoginUser/AuthHeader';
 import SelectField from '../Input/SelectField';
 import ImageUpload from '../ImageUpload';
 import AuthFooter from './AuthFooter';
-import { signUp } from '../Utils/api';
-import { useMutation } from '@tanstack/react-query';
+import { getCountry, signUp } from '../Utils/api';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import ErrorMsg from '../ErrorMsg';
 import { dataURLtoFile } from '../Utils/methods';
 import CountrySelect from '../Input/CountrySelect';
+import { useHandleOtpRoute } from '../Hooks/customHooks';
+import useUserStore from '@/zustandStore/useUserStore';
+import useFormStore from '@/zustandStore/useFormStore';
+import SuccessMsg from '../SuccessMsg';
+import CustomSelect from '../Input/CustomSelect';
+import { useCountryStore } from '@/zustandStore/useCountryStore';
+import Loader from '../Loader/Loader';
 
 const SignUpUser = () => {
   const router = useRouter();
@@ -21,11 +28,29 @@ const SignUpUser = () => {
     secondStep: false,
   });
   const methods = useForm();
+  const setFormData = useFormStore((state) => state.setFormData);
+  const { setUser } = useUserStore();
+  const handleOtpRoute = useHandleOtpRoute();
+  const { selectedCountry, setSelectedCountry } = useCountryStore();
 
-  const { mutate, isPending, isSuccess, isError, error } = useMutation({
+  const firstName = methods.watch('first_name');
+  const lastName = methods.watch('last_name');
+  const email = methods.watch('email');
+  const password = methods.watch('password');
+
+  const { data: countryList, isLoading: isLoadingCountry } = useQuery({
+    queryKey: ['country'],
+    queryFn: getCountry,
+  });
+
+  const { mutate, isPending, isSuccess, isError, error, reset } = useMutation({
     mutationFn: signUp,
     onSuccess: (data) => {
-      console.log('Signup successful:', data);
+      setUser(data.user);
+      setTimeout(() => {
+        reset();
+        handleOtpRoute({ confirmPassword: false });
+      }, 2000);
     },
     onError: (err) => {
       console.error('Signup failed:', err.message);
@@ -36,11 +61,13 @@ const SignUpUser = () => {
     const payload = {
       name: `${data.first_name} ${data.last_name}`,
       email: data.email,
+      phone_number: data.phone_number,
       password: data.password,
       username: `${data.first_name} ${data.last_name}`,
-      country_id: 1,
-      profile_image: data.identityMedia,
+      country_id: selectedCountry?.value,
+      profile_image: data.identityMedia ? data.identityMedia : '',
     };
+    setFormData(payload);
     mutate(payload);
   };
 
@@ -60,12 +87,26 @@ const SignUpUser = () => {
   const handleLogIn = useCallback(() => {
     router.push('/login');
   }, [router]);
+
+  const handleChange = (selectedOption) => {
+    setSelectedCountry(selectedOption);
+  };
+
+  if (isLoadingCountry) return <Loader />;
+
+  const formattedCountries = countryList?.data?.countries?.flat();
+
+  const options = formattedCountries?.map((item) => ({
+    value: item.id,
+    label: item.name,
+    logo: item.flag,
+  }));
   return (
     <>
       <div className="flex justify-center">
         <ConnectAppIcon aria-label="Connect App Logo" />
       </div>
-      <div className="flex flex-col mx-auto w-[420px] my-20">
+      <div className="flex flex-col mx-auto w-full lg:w-[420px] my-20">
         <AuthHeader
           label={'Create Account'}
           description={'Enter your details to create your CONNECT APP account'}
@@ -94,6 +135,11 @@ const SignUpUser = () => {
                     name={'email'}
                   />
                   <InputField
+                    label={'Phone Number'}
+                    type="number"
+                    name={'phone_number'}
+                  />
+                  <InputField
                     label={'Password'}
                     type="password"
                     name={'password'}
@@ -116,6 +162,7 @@ const SignUpUser = () => {
                   type="button"
                   btnclass="w-full h-14"
                   onClick={() => handleSignUpSTeps('next')}
+                  disabled={!firstName || !lastName || !email || !password}
                 />
                 <AuthFooter handleLogIn={handleLogIn} />
               </form>
@@ -127,10 +174,17 @@ const SignUpUser = () => {
                 onSubmit={methods.handleSubmit(onSubmit)}
                 className="space-y-4"
               >
-                <CountrySelect
+                {/* <CountrySelect
                   name="country"
                   label="Location"
                   required={false}
+                /> */}
+                <CustomSelect
+                  value={selectedCountry}
+                  onChange={handleChange}
+                  options={options}
+                  label="Location"
+                  placeholder="Select country..."
                 />
                 <SelectField
                   label="Language"
@@ -157,6 +211,7 @@ const SignUpUser = () => {
           )}
         </FormProvider>
         <ErrorMsg errorMessage={error?.message} />
+        {isSuccess && <SuccessMsg successMessage="Signed up successfully" />}
       </div>
     </>
   );

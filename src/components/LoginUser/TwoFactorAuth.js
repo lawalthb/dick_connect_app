@@ -3,15 +3,61 @@ import PinField from 'react-pin-field';
 import AuthWrapper from './AuthWrapper';
 import Button from '../Button';
 import TwoFactorCountdownTimer from '../TwoFactorCountdownTimer';
+import { useMutation } from '@tanstack/react-query';
+import { resetUserPassword, verifyEmail } from '../Utils/api';
+import ErrorMsg from '../ErrorMsg';
 
-const TwoFactorAuth = ({ heading, subHeading, email }) => {
+const TwoFactorAuth = ({ heading, subHeading, email, formData }) => {
   const methods = useForm();
 
   const pinCode = methods.watch('pinCode');
 
+  const {
+    mutate: resetPasswordMutation,
+    isPending,
+    error: resetPasswordError,
+  } = useMutation({
+    mutationFn: resetUserPassword,
+    onSuccess: () => {
+      window.location.href = '/login';
+    },
+    onError: (err) => {
+      console.error('Password reset failed:', err.message);
+    },
+  });
+
+  const {
+    mutate,
+    isPending: isLoading,
+    error,
+  } = useMutation({
+    mutationFn: verifyEmail,
+    onSuccess: () => {
+      formData.username
+        ? (window.location.href = '/settings')
+        : (window.location.href = '/connecting');
+    },
+    onError: (err) => {
+      console.error('Password reset failed:', err.message);
+    },
+  });
+
   const onSubmit = (data) => {
-    console.log(data);
-    window.location.href = '/connecting';
+    if (formData.confirm_password) {
+      const resetPayload = {
+        email: formData.email,
+        otp: data.pinCode,
+        password: formData.password,
+        password_confirmation: formData.confirm_password,
+      };
+      resetPasswordMutation(resetPayload);
+    } else {
+      const verifyEmailPayload = {
+        email: formData.email,
+        otp: data.pinCode,
+      };
+      mutate(verifyEmailPayload);
+    }
   };
 
   const handlePinChange = (value) => {
@@ -27,7 +73,7 @@ const TwoFactorAuth = ({ heading, subHeading, email }) => {
         >
           <div className="flex mb-5">
             <PinField
-              length={6}
+              length={4}
               validate={/^[a-zA-Z0-9]$/}
               onComplete={(value) => methods.setValue('pinCode', value)}
               style={{
@@ -52,12 +98,13 @@ const TwoFactorAuth = ({ heading, subHeading, email }) => {
             label="Proceed"
             type="submit"
             btnclass="w-full my-1"
-            disabled={!pinCode || pinCode?.length !== 6}
-            // isLoading={isLoading}
+            disabled={!pinCode || pinCode?.length !== 4}
+            isLoading={isPending || isLoading}
           />
-          <TwoFactorCountdownTimer />
+          <TwoFactorCountdownTimer email={formData.email} />
         </form>
       </FormProvider>
+      <ErrorMsg errorMessage={resetPasswordError?.message || error?.message} />
     </AuthWrapper>
   );
 };

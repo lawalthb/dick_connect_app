@@ -1,6 +1,17 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  images: {
+    domains: [
+      'connectapp.myschoolep.com',
+      'connectapp.ogitechconsults.ng',
+      'avatar.iran.liara.run',
+      'connect.udemics.com',
+      'flagcdn.com',
+      'connectapp.talosmart.xyz',
+      'connectlawal.s3.us-east-1.amazonaws.com',
+    ],
+  },
   webpack(config) {
     config.module.rules.push({
       test: /\.svg$/,

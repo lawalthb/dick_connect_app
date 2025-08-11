@@ -23,6 +23,8 @@ const MultiSelectDropdown = ({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  console.log(options);
+
   return (
     <div className="relative w-full" ref={dropdownRef}>
       <label className="block mb-2 text-sm font-medium text-gray-700">
@@ -35,8 +37,8 @@ const MultiSelectDropdown = ({
       >
         <div className="flex items-center justify-between w-full">
           <div>
-            {selectedOptions.length > 0
-              ? selectedOptions.join(', ')
+            {selectedOptions?.length > 0
+              ? selectedOptions.map((opt) => opt.name).join(', ')
               : 'Select options'}
           </div>
           <DropDownIcon className="fill-gray-500" />
@@ -47,16 +49,21 @@ const MultiSelectDropdown = ({
         <div className="absolute z-10 mt-2 w-full bg-white border border-gray-300 rounded shadow-lg max-h-60 overflow-y-auto">
           {options.map((option) => (
             <label
-              key={option}
+              key={option.id}
               className="flex items-center px-4 py-2 hover:bg-[#A20030] cursor-pointer text-gray-500"
             >
               <input
                 type="checkbox"
-                checked={selectedOptions.includes(option)}
+                checked={selectedOptions?.some((item) => item.id === option.id)}
+                disabled={
+                  selectedOptions?.length >= 3 &&
+                  !selectedOptions?.some((item) => item.id === option.id)
+                }
                 onChange={() => handleOptionToggle(option)}
                 className="mr-2"
               />
-              {option}
+              <img src={option.icon} alt="icon" className="size-4 mx-0.5" />
+              {option.name}
             </label>
           ))}
         </div>

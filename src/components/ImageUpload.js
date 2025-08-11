@@ -1,13 +1,21 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useFormContext, Controller } from 'react-hook-form';
 import AddImageIcon from '@/Images/Icons/AddImageIcon.svg';
+import { useAdvertImageStore } from '@/zustandStore/useAdvertImageStore';
 
-const ImageUpload = ({ handlePreview }) => {
+const ImageUpload = ({ name = 'identityMedia' }) => {
   const { control } = useFormContext();
-  const [preview, setPreview] = useState(null);
-  const [mediaType, setMediaType] = useState(null);
-  const [error, setError] = useState(null);
   const fileInputRef = useRef(null);
+
+  const {
+    advertImage,
+    mediaType,
+    error,
+    setAdvertImage,
+    setMediaType,
+    setError,
+    clearMediaState,
+  } = useAdvertImageStore();
 
   const handleMediaChange = (e, onChange) => {
     const file = e.target.files?.[0];
@@ -24,24 +32,23 @@ const ImageUpload = ({ handlePreview }) => {
       img.onload = () => {
         if (img.width < 280 || img.height < 280) {
           setError('Image must be at least 280x280 pixels');
-          setPreview(null);
+          clearMediaState();
           return;
         }
 
         setError(null);
         setMediaType('image');
-        setPreview(objectUrl);
         onChange(file);
-        handlePreview?.(objectUrl);
+        setAdvertImage(objectUrl);
       };
     } else if (isVideo) {
       setError(null);
       setMediaType('video');
-      setPreview(objectUrl);
+      setAdvertImage(objectUrl);
       onChange(file);
     } else {
       setError('Only images and videos are allowed');
-      setPreview(null);
+      clearMediaState();
     }
   };
 
@@ -49,26 +56,28 @@ const ImageUpload = ({ handlePreview }) => {
     fileInputRef.current.click();
   };
 
+  console.log(advertImage, 'advertImage');
+
   return (
     <div className="w-full space-y-4">
       <Controller
-        name="identityMedia"
+        name={name}
         control={control}
         render={({ field: { onChange } }) => (
           <div className="w-full flex justify-between items-center p-5 rounded-[10px] border border-[#D0D5DD]">
             {/* Preview */}
             <div className="flex gap-3 items-center">
               <div className="w-20 h-20 rounded-full overflow-hidden border border-gray-200 shadow-md flex items-center justify-center bg-white">
-                {preview ? (
+                {advertImage ? (
                   mediaType === 'image' ? (
                     <img
-                      src={preview}
+                      src={advertImage}
                       alt="Preview"
                       className="w-full h-full object-cover rounded-full"
                     />
                   ) : (
                     <video
-                      src={preview}
+                      src={advertImage}
                       className="w-full h-full object-cover rounded-full"
                       muted
                       autoPlay
@@ -87,11 +96,12 @@ const ImageUpload = ({ handlePreview }) => {
                   Upload a picture or video
                 </label>
                 <p className="text-sm leading-6 text-[#8F8F8F]">
-                  Upload a clear picture or video .
+                  Upload a clear picture or video.
                 </p>
               </div>
             </div>
-            {/* Hidden file input */}
+
+            {/* Hidden input */}
             <input
               type="file"
               accept="image/*,video/*"

@@ -1,6 +1,6 @@
 import Daniella from '@/Images/Daniella.png';
 import FilterModal from '../Modal/FilterModal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import FilterButton from '../FilterButton';
 import ProfileCourasel from '../ProfileCourasel';
 import Button from '../Button';
@@ -9,33 +9,48 @@ import UserProfile from './UserProfile';
 import BackToPreviousScreen from '../BackToPreviousScreen';
 import { FormProvider, useForm } from 'react-hook-form';
 import InputField from '../Input/InputField';
+import CustomSelect from '../Input/CustomSelect';
+import { useCountryStore } from '@/zustandStore/useCountryStore';
 
-const ConnectWithOthersDetail = () => {
+const ConnectWithOthersDetail = ({
+  profiles,
+  socialId,
+  handleButtonClick,
+  countryList,
+}) => {
   const [showFilter, setShowFilter] = useState(false);
   const [profile, setProfile] = useState(false);
+  const [userData, setUserData] = useState(null);
+  const { selectedCountry, setSelectedCountry } = useCountryStore();
+
+  useEffect(() => {
+    const data = profiles[0];
+    handleUserData(data);
+  }, []);
 
   const methods = useForm();
   const onSubmit = (data) => {
     console.log(data);
   };
 
-  const router = useRouter();
-  const userConnections = [
-    { id: 1, image: Daniella },
-    { id: 2, image: Daniella },
-    { id: 3, image: Daniella },
-    { id: 4, image: Daniella },
-    { id: 5, image: Daniella },
-  ];
-  const userCircles = [
-    { id: 1, circle: 'Music' },
-    { id: 2, circle: 'Sport' },
-    { id: 3, circle: 'Business' },
-  ];
-
-  const handleOptionClick = (identifier) => {
-    console.log(identifier);
+  const handleChange = (selectedOption) => {
+    setSelectedCountry(selectedOption);
   };
+
+  const formattedCountries = countryList?.flat();
+
+  const options = formattedCountries?.map((item) => ({
+    value: item.id,
+    label: item.name,
+    logo: item.flag,
+  }));
+
+  const handleUserData = (data) => {
+    setUserData(data);
+  };
+
+  const router = useRouter();
+
   const handleFilter = () => {
     setShowFilter((prev) => !prev);
   };
@@ -58,18 +73,33 @@ const ConnectWithOthersDetail = () => {
               label="Subscription"
               btnclass="w-full lg:w-auto h-10 whitespace-nowrap px-6 lg:px-16"
               btnstyle="rounded"
-              onClick={() => router.push('/settings?active=subscription')}
+              onClick={() =>
+                router.push(`/settings?active=subscription&id=${socialId}`)
+              }
             />
             <div className="w-full lg:w-auto">
               <FilterButton handleFilter={handleFilter} />
             </div>
           </div>
+          {socialId === 11 && (
+            <div className="flex gap-10 w-full md:w-1/2 z-10">
+              <CustomSelect
+                value={selectedCountry}
+                onChange={handleChange}
+                options={options}
+                label="Target Country"
+                placeholder="Choose country..."
+              />
+            </div>
+          )}
 
           <ProfileCourasel
-            userConnections={userConnections}
-            userCircles={userCircles}
-            handleOptionClick={handleOptionClick}
+            profiles={profiles}
             handleViewProfile={handleViewProfile}
+            socialId={socialId}
+            handleUserData={handleUserData}
+            handleButtonClick={handleButtonClick}
+            selectedCountryId={selectedCountry?.value}
           />
 
           {showFilter && (
@@ -113,7 +143,7 @@ const ConnectWithOthersDetail = () => {
           <BackToPreviousScreen onBackClick={handleViewProfile} />
         </div>
       )}
-      {profile && <UserProfile />}
+      {profile && <UserProfile userData={userData} />}
     </div>
   );
 };

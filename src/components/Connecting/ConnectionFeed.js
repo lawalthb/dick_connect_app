@@ -1,22 +1,27 @@
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
 import ConnectStory from './ConnectStory';
 import FilterButton from '../FilterButton';
 import Daniella from '@/Images/Daniella.png';
-import WorldIcon from '@/Images/Icons/WorldIcon.svg';
-import ExpandImageIcon from '@/Images/Icons/ExpandImageIcon.svg';
-import { PiDotsThreeOutlineVertical } from 'react-icons/pi';
 import Modal from '../Modal';
-import Image from 'next/image';
 import SearchField from '../Input/SearchField';
 import Feeds from './Feeds';
+import PostStories from './PostStories';
 
-const ConnectionFeed = () => {
+const ConnectionFeed = ({ data, profileImages }) => {
   const [showFilter, setShowFilter] = useState(false);
   const [showMore, setShowMore] = useState(false);
   const [expandImage, setExpandImage] = useState(false);
+  const [postStories, setPostStories] = useState(false);
+  const [url, setUrl] = useState('');
+  const [showComment, setShowComment] = useState(false);
+  const [feedId, setFeedId] = useState(false);
+  const [id, setId] = useState(false);
 
-  const handleShowMore = (identifier) => {
+  const handleShowMore = (identifier, id) => {
+    if (id) {
+      setId(id);
+    }
+    setId;
     if (identifier === 'post') {
       console.log(identifier);
     } else if (identifier === 'delete') {
@@ -28,8 +33,19 @@ const ConnectionFeed = () => {
   const handleFilter = () => {
     setShowFilter((prev) => !prev);
   };
-  const handleExpandImage = () => {
+
+  const handleComment = (id) => {
+    setFeedId(id);
+    setShowComment((prev) => !prev);
+  };
+
+  const handleExpandImage = (url) => {
+    setUrl(url);
     setExpandImage((prev) => !prev);
+  };
+
+  const handlePostStories = () => {
+    setPostStories((prev) => !prev);
   };
   return (
     <div className="md:px-20 w-full mb-20">
@@ -43,22 +59,41 @@ const ConnectionFeed = () => {
           </div>
         </div>
         <div className="w-full lg:w-[562px] mx-auto my-20">
-          <ConnectStory />
-          <Feeds
-            handleExpandImage={handleExpandImage}
-            handleShowMore={handleShowMore}
-            showMore={showMore}
-          />
+          <ConnectStory handlePostStories={handlePostStories} />
+          <div>
+            {data?.data.map((feed) => {
+              return (
+                <div key={feed.id} className="mb-5">
+                  <Feeds
+                    feed={feed}
+                    handleExpandImage={handleExpandImage}
+                    handleShowMore={handleShowMore}
+                    showMore={showMore}
+                    handleComment={handleComment}
+                    showComment={showComment}
+                    feedId={feedId}
+                    clickedId={id}
+                  />
+                </div>
+              );
+            })}
+          </div>
         </div>
       </>
+      {postStories && (
+        <PostStories
+          onClose={handlePostStories}
+          show={postStories}
+          profileImages={profileImages}
+        />
+      )}
 
       {expandImage && (
         <Modal isOpen={expandImage} onClose={handleExpandImage} size="max-w-xl">
-          {' '}
           <img
-            src={Daniella.src}
+            src={url}
             alt="Image"
-            className="object-fill w-full text-black pr-1.5"
+            className="object-fill w-full text-black pr-1.5 max-h-[calc(100vh-150px)]"
           />
         </Modal>
       )}

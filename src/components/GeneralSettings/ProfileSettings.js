@@ -7,19 +7,59 @@ import { FormProvider, useForm } from 'react-hook-form';
 import SelectField from '../Input/SelectField';
 import Button from '../Button';
 import { useState } from 'react';
+import CountrySelect from '../Input/CountrySelect';
+import { updateProfile } from '../Utils/api';
+import { useMutation } from '@tanstack/react-query';
+import CustomSelect from '../Input/CustomSelect';
+import ErrorMsg from '../ErrorMsg';
 
-const ProfileSettings = () => {
+const ProfileSettings = ({ countryList }) => {
   const [successfullySaved, setSuccessfullySaved] = useState(false);
+  const [selectedCountry, setSelectedCountry] = useState(null);
   const methods = useForm();
 
-  const countrySelected = methods.watch('country');
+  const { reset } = methods;
+
+  const {
+    mutate,
+    isPending,
+    isSuccess,
+    error,
+    reset: resetProfile,
+  } = useMutation({
+    mutationFn: updateProfile,
+    onSuccess: () => {
+      setSuccessfullySaved(true);
+      setTimeout(() => {
+        resetProfile();
+        reset();
+        setSuccessfullySaved(false);
+      }, 5000);
+    },
+    onError: (err) => {
+      console.error('Profile update failed:', err.message);
+    },
+  });
+
   const onSubmit = (data) => {
-    console.log(data);
-    setSuccessfullySaved(true);
-    setTimeout(() => {
-      setSuccessfullySaved(false);
-    }, 5000);
+    const payload = {
+      ...data,
+      country_id: selectedCountry.value,
+    };
+    mutate(payload);
   };
+
+  const handleChange = (selectedOption) => {
+    setSelectedCountry(selectedOption);
+  };
+
+  const formattedCountries = countryList?.flat();
+
+  const options = formattedCountries?.map((item) => ({
+    value: item.id,
+    label: item.name,
+    logo: item.flag,
+  }));
   return (
     <div className="w-[90%] lg:w-[60%] py-20 px-10 mx-auto mt-20">
       <div className="flex items-center justify-between ">
@@ -41,9 +81,6 @@ const ProfileSettings = () => {
           </div>
         )}
       </div>
-      <div className="mt-10">
-        <UserAvatar updateImage={false} />
-      </div>
       <FilterModalIcon className="w-10 mt-5 ml-auto" />
       <div>
         <FormProvider {...methods}>
@@ -56,19 +93,19 @@ const ProfileSettings = () => {
                   name={'full_name'}
                   required={false}
                 />
-                <InputField
+                {/* <InputField
                   label={'Email Address'}
                   type="email"
                   name={'email'}
                   required={false}
-                />
+                /> */}
               </div>
               <div className="flex gap-10 w-full">
                 <div className="w-1/2">
                   <InputField
                     label={'Phone Number'}
                     type="number"
-                    name={'phone'}
+                    name={'phone_number'}
                     required={false}
                   />
                 </div>
@@ -88,33 +125,41 @@ const ProfileSettings = () => {
                   <InputField
                     label={'Date of Birth'}
                     type="date"
-                    name={'date'}
+                    name={'birth_date'}
                     required={false}
                   />
                 </div>
               </div>
-              <div className="flex gap-10">
-                <SelectField
-                  label="Country"
-                  name="country"
-                  defaultValue=""
-                  type="country"
-                  required={false}
-                />
-
-                <SelectField
-                  label="State"
-                  name="state"
-                  defaultValue=""
-                  type="region"
-                  country={countrySelected}
-                  required={false}
-                />
+              <div className="flex w-full gap-10">
+                <div className="w-1/2">
+                  {/* <CountrySelect
+                    name="country_id"
+                    label="Country"
+                    required={false}
+                  /> */}
+                  <CustomSelect
+                    value={selectedCountry}
+                    onChange={handleChange}
+                    options={options}
+                    label="Select Country"
+                    placeholder="Choose country..."
+                  />
+                </div>
+                <div className="w-1/2">
+                  <SelectField
+                    label="State"
+                    name="state"
+                    defaultValue=""
+                    type="region"
+                    country={selectedCountry?.label}
+                    required={false}
+                  />
+                </div>
               </div>
               <InputField
-                label={'Street Address'}
+                label={'City'}
                 type="text"
-                name={'street'}
+                name={'city'}
                 required={false}
               />
             </div>
@@ -122,8 +167,10 @@ const ProfileSettings = () => {
               label="Save"
               type="submit"
               btnclass="w-[225px] mt-10 h-14 ml-auto"
+              isLoading={isPending}
             />
           </form>
+          <ErrorMsg errorMessage={error?.message} />
         </FormProvider>
       </div>
     </div>
