@@ -13,7 +13,7 @@ import { useMutation, useQuery } from '@tanstack/react-query';
 import ErrorMsg from '../ErrorMsg';
 import { dataURLtoFile } from '../Utils/methods';
 import CountrySelect from '../Input/CountrySelect';
-import { useHandleOtpRoute } from '../Hooks/customHooks';
+import { useHandleOtpRoute } from '@/Hooks/customHooks';
 import useUserStore from '@/zustandStore/useUserStore';
 import useFormStore from '@/zustandStore/useFormStore';
 import SuccessMsg from '../SuccessMsg';
